@@ -14,5 +14,6 @@
     <body>
         <h2>Sistema de Gestión de Tratamientos (SGP)</h2>
         <a href="ListarTratamientos">Listado de Tratamientos</a>
+        <a href="ListarClientes">Listado de Clientes</a>
     </body>
 </html>

@@ -16,6 +16,22 @@
         <servlet-name>ModificarTratamiento</servlet-name>
         <servlet-class>com.fpmislata.servlets.ModificarTratamiento</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AltaCliente</servlet-name>
+        <servlet-class>com.fpmislata.servlets.AltaCliente</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarCliente</servlet-name>
+        <servlet-class>com.fpmislata.servlets.EliminarCliente</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListarClientes</servlet-name>
+        <servlet-class>com.fpmislata.servlets.ListarClientes</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModificarCliente</servlet-name>
+        <servlet-class>com.fpmislata.servlets.ModificarCliente</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListarTratamientos</servlet-name>
         <url-pattern>/ListarTratamientos</url-pattern>
@@ -31,6 +47,22 @@
     <servlet-mapping>
         <servlet-name>ModificarTratamiento</servlet-name>
         <url-pattern>/ModificarTratamiento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AltaCliente</servlet-name>
+        <url-pattern>/AltaCliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarCliente</servlet-name>
+        <url-pattern>/EliminarCliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarClientes</servlet-name>
+        <url-pattern>/ListarClientes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarCliente</servlet-name>
+        <url-pattern>/ModificarCliente</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
