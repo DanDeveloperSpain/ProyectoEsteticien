@@ -35,6 +35,8 @@ public class TratamientoService implements TratamientoServiceLocal {
     public ArrayList listaTratamientos() {
         return lista;
     }
+    
+    
 
     @Override
     public void addTratamiento(Tratamiento tratamiento) {
@@ -106,6 +108,23 @@ public class TratamientoService implements TratamientoServiceLocal {
         if(enc==true){
             lista.remove(i);
         }
+    }
+
+    @Override
+    public Tratamiento mostrarUno(Tratamiento tratamiento) {
+        boolean enc = false;
+        int i=0;
+        
+        while((i<lista.size())&&(enc==false)){
+            if(lista.get(i).getId()==tratamiento.getId()){
+                enc=true;                
+            }else{
+                i++;
+            }
+        }
+        // Si el tratamiento existe, tenemos el indice borrar
+        return lista.get(i);
+        
     }
     
     

@@ -33,7 +33,21 @@ public class ClienteService implements ClienteServiceLocal {
     @Override
     public ArrayList<Cliente> listar() {
         return listaClientes;
-    }    
+    }
+    
+    @Override
+    public Cliente mostrarUno(Cliente cliente) {
+        Cliente clienteMostrar = null;
+        for(int i=0;i<listaClientes.size();i++){
+            if(listaClientes.get(i).getId()==cliente.getId()){
+               clienteMostrar=listaClientes.get(i);
+            }
+        }
+        return clienteMostrar;
+                  
+        
+    }
+    
     
     @Override
     public void borrar(Cliente cliente) {
@@ -64,6 +78,8 @@ public class ClienteService implements ClienteServiceLocal {
             listaClientes.set(posClienteModif, cliente);
         }
     }
+
+    
 
     
     

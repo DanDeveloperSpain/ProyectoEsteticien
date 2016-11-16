@@ -24,5 +24,7 @@ public interface ClienteServiceLocal {
 
     ArrayList<Cliente> listar();
 
+    Cliente mostrarUno(Cliente cliente);
+
         
 }

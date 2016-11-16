@@ -25,5 +25,7 @@ public interface TratamientoServiceLocal {
     Tratamiento findTratamientoById(Tratamiento tratamiento);
 
     void deleteTratamiento(Tratamiento tratamiento);
+
+    Tratamiento mostrarUno(Tratamiento tratamiento);
     
 }
