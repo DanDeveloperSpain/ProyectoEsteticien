@@ -16,7 +16,7 @@
     </head>
     <body>
         <% Cliente cliente = (Cliente) request.getAttribute("cliente");
-           ArrayList<Producto> productosVendidos = (ArrayList<Producto>) request.getAttribute("productosVendidos");        
+           ArrayList<Producto> productosVendidos = (ArrayList<Producto>) request.getAttribute("prodsVendidos");        
         %>
         <h1>Datos Cliente</h1>
         <table>

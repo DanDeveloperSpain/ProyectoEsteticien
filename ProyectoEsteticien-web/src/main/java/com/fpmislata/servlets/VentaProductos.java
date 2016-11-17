@@ -93,7 +93,7 @@ public class VentaProductos extends HttpServlet {
                 }
                 
                 request.setAttribute("cliente", cliente);
-                request.setAttribute("productoVendidos", productosVendidos);
+                request.setAttribute("prodsVendidos", productosVendidos);
                 rd = this.getServletContext().getRequestDispatcher("/finalizarVentaProductos.jsp");
                 rd.forward(request, response);
                 
