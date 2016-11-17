@@ -32,6 +32,10 @@
         <servlet-name>ModificarCliente</servlet-name>
         <servlet-class>com.fpmislata.servlets.ModificarCliente</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VentaProductos</servlet-name>
+        <servlet-class>com.fpmislata.servlets.VentaProductos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListarTratamientos</servlet-name>
         <url-pattern>/ListarTratamientos</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ModificarCliente</servlet-name>
         <url-pattern>/ModificarCliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VentaProductos</servlet-name>
+        <url-pattern>/VentaProductos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
