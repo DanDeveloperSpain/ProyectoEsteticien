@@ -68,6 +68,7 @@ public class VentaProductos extends HttpServlet {
             ;break;
             case "selectCliente":
                 idCliente = Integer.parseInt(request.getParameter("clienteChecked"));
+                request.getSession().setAttribute("idCliente", idCliente);
                                 
                 ArrayList<Producto> listaProductos = productoService.listarProductos();
                 
@@ -76,10 +77,12 @@ public class VentaProductos extends HttpServlet {
                 rd.forward(request, response);
             ;break;
             case "selectProducto":
+                idCliente= (int) request.getSession().getAttribute("idCliente");
                 Cliente cl = new Cliente(idCliente,"","","","","");
                 Cliente cliente = clienteService.mostrarUno(cl);
                 
                 idProductos = (request.getParameterValues("productoChecked"));//este array es de Strings
+                request.getSession().setAttribute("idProductos", idProductos);
                 if(idProductos!=null){
                     for(int i=0;i<idProductos.length;i++){
                         int idProd = Integer.parseInt(idProductos[i]);
@@ -96,6 +99,8 @@ public class VentaProductos extends HttpServlet {
                 
             ;break;
             case "confirmarVenta":
+                idCliente= (int) request.getSession().getAttribute("idCliente");
+                idProductos= (String[]) request.getSession().getAttribute("idProductos");
                 String fechaVenta = request.getParameter("fechaVenta");
                 for(int i=0;i<idProductos.length;i++){
                         int idProd = Integer.parseInt(idProductos[i]);

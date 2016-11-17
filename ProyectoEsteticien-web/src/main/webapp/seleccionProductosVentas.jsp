@@ -14,7 +14,7 @@
         <title>JSP Page</title>
    </head>
     
-        <%  ArrayList<Producto> listaProductos = (ArrayList<Producto>) session.getAttribute("listaProductos"); %>
+        <%  ArrayList<Producto> listaProductos = (ArrayList<Producto>) request.getAttribute("listaProductos"); %>
         <form action="VentaProductos?accion=selectProducto" method="POST" name="listado">
             <table border="0" cellspacing="0" cellspadding="10">
                 <tr>
