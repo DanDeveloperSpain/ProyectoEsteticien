@@ -5,7 +5,7 @@
  */
 package com.fpmislata.service;
 
-import com.fpmislata.domain.Producto;
+import com.fpmislata.domain.Venta;
 import java.util.ArrayList;
 import javax.ejb.Local;
 
@@ -14,10 +14,10 @@ import javax.ejb.Local;
  * @author Vicente
  */
 @Local
-public interface ProductoServiceLocal {
+public interface VentaServiceLocal {
 
-    ArrayList<Producto> listarProductos();
+    void agregarVenta(Venta venta);
 
-    Producto mostrarUno(Producto prod);
+    ArrayList<Venta> listarVentas();
     
 }

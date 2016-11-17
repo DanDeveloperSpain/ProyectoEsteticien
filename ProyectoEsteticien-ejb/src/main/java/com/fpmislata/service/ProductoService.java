@@ -5,6 +5,7 @@
  */
 package com.fpmislata.service;
 
+import com.fpmislata.domain.Cliente;
 import com.fpmislata.domain.Producto;
 import java.util.ArrayList;
 import javax.ejb.Stateless;
@@ -34,9 +35,21 @@ public class ProductoService implements ProductoServiceLocal {
         return listaProductos;
     }
     
+    
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public Producto mostrarUno(Producto prod) {
+        Producto prodMostrar = null;
+        for(int i=0;i<listaProductos.size();i++){
+            if(listaProductos.get(i).getId()==prod.getId()){
+               prodMostrar=listaProductos.get(i);
+            }
+        }
+        return prodMostrar;
+    }
 
    
 }
