@@ -9,12 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
         <title>JSP Page</title>
     </head>
     <body>
         <h2>Nuevo Cliente</h2>
         <form action="AltaCliente">
-            <table>
+            <table class="table table-condensed table-responsive">
                 <tr>
                     <td>Nombre</td>
                     <td><input type="text" name="nombre" value="" required /></td>
@@ -36,7 +38,7 @@
                     <td><input type="text" name="email" value="" required  /></td>
                 </tr>
             </table>
-            <input type="submit" value="Nuevo Cliente"/>
+            <input type="submit" value="Nuevo Cliente" class="btn btn-success"/>
         </form>
     </body>
 </html>
