@@ -31,7 +31,7 @@
                     <tr>
                         <td><%=prod.getNombreProducto()%></td>
                         <td><%=prod.getCategoriaProducto()%></td>
-                        <td><%=prod.getPrecioProducto()%></td>
+                        <td><%=prod.getPrecioProducto()%> €</td>
                         <td><input type="checkbox" name="productoChecked" value="<%=prod.getId()%>"</td>
                     </tr>
                 <% } %>    
