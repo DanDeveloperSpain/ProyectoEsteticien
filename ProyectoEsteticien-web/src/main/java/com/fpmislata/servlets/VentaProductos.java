@@ -107,9 +107,11 @@ public class VentaProductos extends HttpServlet {
                         Venta venta = new Venta(0,idCliente,idProd,fechaVenta);
                         ventaService.agregarVenta(venta);
                 }
-            rd = this.getServletContext().getRequestDispatcher("/index.jsp");
-            rd.forward(request, response);
-                
+                String ventaRealizada="1";//funciona como un switch
+                request.setAttribute("ventaRealizada", ventaRealizada);
+                rd = this.getServletContext().getRequestDispatcher("/index.jsp");
+                rd.forward(request, response);
+            ;break;    
                 
                 
         }

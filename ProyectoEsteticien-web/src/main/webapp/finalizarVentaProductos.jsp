@@ -34,12 +34,12 @@
                     </tr>
             <% } %>
         </table>
-        <form action="VentaProductos?accion=confirmarVenta">
-            Fecha: <input type="date" name="fechaVenta" value="" required />
+        <br>
+        <form action="VentaProductos?accion=confirmarVenta" method="POST" >
+            Establecer Fecha: <input type="date" name="fechaVenta" value="" required /><br>
             <input type="submit" value="Confirmar Venta" />
         </form>
-        <a href="index.jsp">Cancelar Venta</a>
-        <a href="seleccionProductosVentas.jsp">Volver a Productos</a>
-        
+        <a href="index.jsp">Cancelar Venta, y Volver al Inicio</a>
+                
     </body>
 </html>
