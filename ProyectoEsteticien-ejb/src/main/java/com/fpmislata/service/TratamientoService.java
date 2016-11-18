@@ -122,7 +122,6 @@ public class TratamientoService implements TratamientoServiceLocal {
                 i++;
             }
         }
-        // Si el tratamiento existe, tenemos el indice borrar
         return lista.get(i);
         
     }
