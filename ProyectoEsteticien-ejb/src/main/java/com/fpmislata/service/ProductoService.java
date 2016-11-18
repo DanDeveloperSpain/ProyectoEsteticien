@@ -24,7 +24,7 @@ public class ProductoService implements ProductoServiceLocal {
         listaProductos.add(new Producto(1,"Aceite esencia de té","aceites de masaje",4.95));
         listaProductos.add(new Producto(2,"Crema reafirmante Skin Clinic","cremas",19.90));
         listaProductos.add(new Producto(3,"Sérum reparador Shu Uemura 30ml","cremas",30.45));
-        listaProductos.add(new Producto(3,"Champú revitalizante L'Oreal","champus",13.45));
+        listaProductos.add(new Producto(4,"Champú revitalizante L'Oreal","champus",13.45));
         listaProductos.add(new Producto(5,"After Save Eucerin 75ml","afeitado",12.63));
         listaProductos.add(new Producto(6,"Avene men espuma de afeitado 200 ml","afeitado",9.74));
         
