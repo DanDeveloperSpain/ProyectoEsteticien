@@ -5,12 +5,15 @@
  */
 package com.fpmislata.servlets;
 
-import com.fpmislata.domain.Tratamiento;
+import com.fpmislata.domain.Cita;
+import com.fpmislata.service.CitaServiceLocal;
+import com.fpmislata.service.ClienteServiceLocal;
 import com.fpmislata.service.TratamientoServiceLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +23,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DanielPerez
  */
-public class AltaTratamiento extends HttpServlet {
+public class ConcertarCita extends HttpServlet {
+
+    @EJB
+    private CitaServiceLocal citaService;
+
+    @EJB
+    private ClienteServiceLocal clienteService;
 
     @EJB
     private TratamientoServiceLocal tratamientoService;
@@ -38,31 +47,56 @@ public class AltaTratamiento extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //1. Recuperamos los parametros
-        String nombre = request.getParameter("nombre");
-        double precio = Double.parseDouble(request.getParameter("precio"));
-        double duracion = Double.parseDouble(request.getParameter("duracion"));
-        int sala = Integer.parseInt(request.getParameter("sala"));
+        response.setContentType("text/html;charset=UTF-8");
 
-        //2. Creamos el objeto Tratamiento
-        Tratamiento tratamiento = new Tratamiento();
-        tratamiento.setNombreTrat(nombre);
-        tratamiento.setPrecioTrat(precio);
-        tratamiento.setDuracionTrat(duracion);
-        tratamiento.setSala(sala);
+        String accion = request.getParameter("accion");
 
-        try {
-            tratamientoService.addTratamiento(tratamiento);
-        } catch (Exception e) {
-            //Informamos cualquier error
-            e.printStackTrace();
+        if (accion.equals("primero")) {
+
+            try {
+                // Ejecutamos el metodo y obtenemos la lista de clientes y tratamientos
+                ArrayList listaCli = clienteService.listar();
+                ArrayList listaTrat = tratamientoService.listaTratamientos();
+                // Asignamos al request el atributo lista 
+                request.getSession().setAttribute("listaCli", listaCli);
+                request.getSession().setAttribute("listaTrat", listaTrat);
+                // Pasamos al RequestDispatcher la pagina a cargar
+                RequestDispatcher rd = request.getRequestDispatcher("/seleccionCita.jsp");
+                // Cargamos la pagina
+                rd.forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        // Volvemos a cargar la lista de personas
-	ArrayList<Tratamiento> lista = tratamientoService.listaTratamientos();
-	request.setAttribute("tratamientos", lista);
+        if (accion.equals("segundo")) {
 
-	request.getRequestDispatcher("/listarTratamientos.jsp").forward(request,response);
+            //Recogemos los datos para crear la cita
+            int idCli = Integer.parseInt(request.getParameter("clienteChecked"));
+            int idTrat = Integer.parseInt(request.getParameter("tratamientoChecked"));
+            String dia = request.getParameter("dia");
+            String hora = request.getParameter("hora");
+
+            //2. Creamos el objeto Cita
+            Cita cita = new Cita();
+            cita.setIdCliente(idCli);
+            cita.setIdTratamiento(idTrat);
+            cita.setFecha(dia);
+            cita.setHora(hora);
+
+            try {
+                citaService.addCita(cita);
+            } catch (Exception e) {
+                //Informamos cualquier error
+                e.printStackTrace();
+            }
+
+            // Pasamos al RequestDispatcher la pagina a cargar
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            // Cargamos la pagina
+            rd.forward(request, response);
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
