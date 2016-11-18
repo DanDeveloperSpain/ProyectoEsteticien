@@ -81,6 +81,8 @@ public class VentaProductos extends HttpServlet {
                 Cliente cl = new Cliente(idCliente,"","","","","");
                 Cliente cliente = clienteService.mostrarUno(cl);
                 
+                Double precioTotalVenta=0.0;
+                
                 idProductos = (request.getParameterValues("productoChecked"));//este array es de Strings
                 request.getSession().setAttribute("idProductos", idProductos);
                 if(idProductos!=null){
@@ -89,11 +91,13 @@ public class VentaProductos extends HttpServlet {
                         Producto prod=new Producto(idProd,"","",0);
                         Producto producto = productoService.mostrarUno(prod);
                         productosVendidos.add(producto);
+                        precioTotalVenta+=producto.getPrecioProducto();
                     }
                 }
                 
                 request.setAttribute("cliente", cliente);
                 request.setAttribute("prodsVendidos", productosVendidos);
+                request.setAttribute("precioTotal", precioTotalVenta);
                 rd = this.getServletContext().getRequestDispatcher("/finalizarVentaProductos.jsp");
                 rd.forward(request, response);
                 

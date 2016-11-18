@@ -11,18 +11,22 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
         <title>JSP Page</title>
    </head>
     
         <%  ArrayList<Producto> listaProductos = (ArrayList<Producto>) request.getAttribute("listaProductos"); %>
         <form action="VentaProductos?accion=selectProducto" method="POST" name="listado">
-            <table border="0" cellspacing="0" cellspadding="10">
-                <tr>
-                    <td>Producto</td>
-                    <td>Categoría</td>
-                    <td>Precio</td>
-                    <td></td>
-                </tr>
+            <table border="0" cellspacing="0" cellspadding="10" class="table table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th></th>
+                    </tr>
+                </thead>
                 <% for(Producto prod : listaProductos){ %>
                     <tr>
                         <td><%=prod.getNombreProducto()%></td>
@@ -32,8 +36,8 @@
                     </tr>
                 <% } %>    
             </table>
-            <input type = "submit" value="Seleccionar"/>
+            <input type = "submit" value="Seleccionar" class="btn btn-success"/>
         </form>
-        <a href="index.jsp">Regresar al Inicio</a>
+        <a href="index.jsp" class="btn btn-primary">Regresar al Inicio</a>
     
 </html>

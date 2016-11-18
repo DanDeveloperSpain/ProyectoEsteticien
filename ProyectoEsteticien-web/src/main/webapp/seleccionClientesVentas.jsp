@@ -11,20 +11,22 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
         <title>JSP Page</title>
    </head>
     
         <%  ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) session.getAttribute("listaClientes"); %>
         <form action="VentaProductos?accion=selectCliente" method="POST" name="listado">
-            <table border="0" cellspacing="0" cellspadding="10">
-                <tr>
-                        <td>Nombre</td>
-                        <td>Apellidos</td>
-                        <td>Dni</td>
-                        <td>Telefono</td>
-                        <td>Email</td>
-                        <td></td>
-                    </tr>
+            <table border="0" cellspacing="0" cellspadding="10" class="table table-condensed table-responsive">
+                <thead>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Dni</th>
+                    <th>Telefono</th>
+                    <th>Email</th>
+                    <th></th>
+                </thead>
                 <% for(Cliente cliente : listaClientes){ %>
                     <tr>
                         <td><%=cliente.getNombre()%></td>
@@ -36,8 +38,8 @@
                     </tr>
                 <% } %>    
             </table>
-            <input type = "submit" value="Seleccionar"/>
+            <input type = "submit" value="Seleccionar" class="btn btn-success"/>
         </form>
-        <a href="index.jsp">Regresar al Inicio</a>
+        <a href="index.jsp" class="btn btn-primary">Regresar al Inicio</a>
     
 </html>

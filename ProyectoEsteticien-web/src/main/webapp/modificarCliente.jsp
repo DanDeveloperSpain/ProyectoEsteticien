@@ -11,6 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
         <title>JSP Page</title>
     </head>
     <body>
@@ -23,14 +25,16 @@
         %>
                 
         <form action=<%=textoAction%> method="POST" name="listado">
-        <table border="0" cellspacing="0" cellspadding="10">
-            <tr>
-                    <td>Nombre</td>
-                    <td>Apellidos</td>
-                    <td>Dni</td>
-                    <td>Telefono</td>
-                    <td>Email</td>
-            </tr>
+        <table border="0" cellspacing="0" cellspadding="10" class="table table-condensed table-responsive">
+            <thead>
+                <tr>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Dni</th>
+                        <th>Telefono</th>
+                        <th>Email</th>
+                </tr>
+            </thead>
             <% for(int i=0;i<clientesAModificar.size();i++){%>
                 <tr>
                     <td><input type="text" name="nombre" value=<%=clientesAModificar.get(i).getNombre()%> required /></td>
@@ -41,8 +45,8 @@
                 </tr>
             <% } %>    
         </table>
-        <input type = "submit" value="Confirmar Cambios"/>
-        <input type = "reset" value="Restaurar Datos"/>
+        <input type = "submit" value="Confirmar Cambios" class="btn btn-success"/>
+        <input type = "reset" value="Restaurar Datos" class="btn btn-danger"/>
         </form>
     </body>
 </html>
