@@ -15,6 +15,7 @@
     </head>
     <script>
         <% String ventaRealizada = (String) request.getAttribute("ventaRealizada"); %>
+        <% String citaAsignada = (String) request.getAttribute("citaAsignada"); %>
         <% if(ventaRealizada!=null){
             int ventaProducida = Integer.parseInt(ventaRealizada);
             if(ventaProducida==1){
@@ -23,6 +24,17 @@
                 alert("La venta se ha producido sin problemas");
             }
         <% } %>
+        
+        <% if(citaAsignada!=null){
+            int citaAsignadaOk = Integer.parseInt(citaAsignada);
+            if(citaAsignadaOk==1){
+        }%>
+            window.onload=function(){
+                alert("La Cita se ha asignado correctamente");
+            }
+        <% } %>
+        
+        
             
             
     </script>
@@ -32,6 +44,7 @@
         <a href="ListarClientes" class="btn btn-primary">Listado de Clientes</a>
         <a href="ListarTratamientos" class="btn btn-primary">Listado de Tratamientos</a>
         <a href="ConcertarCita?accion=primero" class="btn btn-primary">Asignar Citas</a>
+        <a href="ListarCitas" class="btn btn-primary">Ver Citas</a>
         <a href="VentaProductos?accion=comienzo" class="btn btn-primary">Venta de Productos</a> 
     </body>
 </html>

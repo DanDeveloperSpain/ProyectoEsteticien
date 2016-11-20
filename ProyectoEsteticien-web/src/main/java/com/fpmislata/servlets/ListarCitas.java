@@ -6,6 +6,8 @@
 package com.fpmislata.servlets;
 
 import com.fpmislata.domain.Cita;
+import com.fpmislata.domain.Cliente;
+import com.fpmislata.domain.Tratamiento;
 import com.fpmislata.service.CitaServiceLocal;
 import com.fpmislata.service.ClienteServiceLocal;
 import com.fpmislata.service.TratamientoServiceLocal;
@@ -23,17 +25,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DanielPerez
  */
-public class ConcertarCita extends HttpServlet {
+public class ListarCitas extends HttpServlet {
 
     @EJB
-    private CitaServiceLocal citaService;
+    private TratamientoServiceLocal tratamientoService;
 
     @EJB
     private ClienteServiceLocal clienteService;
 
     @EJB
-    private TratamientoServiceLocal tratamientoService;
-    
+    private CitaServiceLocal citaService;
     
 
     /**
@@ -48,56 +49,30 @@ public class ConcertarCita extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String accion = request.getParameter("accion");
-
-        if (accion.equals("primero")) {
-
-            try {
-                // Ejecutamos el metodo y obtenemos la lista de clientes y tratamientos
-                ArrayList listaCli = clienteService.listar();
-                ArrayList listaTrat = tratamientoService.listaTratamientos();
-                // Asignamos al request el atributo lista 
-                request.getSession().setAttribute("listaCli", listaCli);
-                request.getSession().setAttribute("listaTrat", listaTrat);
-                // Pasamos al RequestDispatcher la pagina a cargar
-                RequestDispatcher rd = request.getRequestDispatcher("/seleccionCita.jsp");
-                // Cargamos la pagina
-                rd.forward(request, response);
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            // Ejecutamos el metodo y obtenemos la lista
+            ArrayList<Cita> listaCita = citaService.listaCitas();
+            ArrayList<Cliente> listaCli = new ArrayList<Cliente>();
+            ArrayList<Tratamiento> listaTrat = new ArrayList<Tratamiento>();
+            
+            for(Cita cita : listaCita){
+                Cliente cliente= clienteService.muestraUnoId(cita.getIdCliente());
+                Tratamiento tratamiento= tratamientoService.muestraUnoId(cita.getIdTratamiento());
+                listaCli.add(cliente);
+                listaTrat.add(tratamiento);
             }
-        }
-
-        if (accion.equals("segundo")) {
-
-            //Recogemos los datos para crear la cita
-            int idCli = Integer.parseInt(request.getParameter("clienteChecked"));
-            int idTrat = Integer.parseInt(request.getParameter("tratamientoChecked"));
-            String dia = request.getParameter("dia");
-            String hora = request.getParameter("hora");
-
-            //2. Creamos el objeto Cita
-            Cita cita = new Cita();
-            cita.setIdCliente(idCli);
-            cita.setIdTratamiento(idTrat);
-            cita.setFecha(dia);
-            cita.setHora(hora);
-
-            try {
-                citaService.addCita(cita);
-            } catch (Exception e) {
-                //Informamos cualquier error
-                e.printStackTrace();
-            }
-
+               
+            
+            // Asignamos al request el atributo lista 
+            request.getSession().setAttribute("citas",listaCita);
+            request.getSession().setAttribute("clientes",listaCli);
+            request.getSession().setAttribute("tratamientos",listaTrat);
             // Pasamos al RequestDispatcher la pagina a cargar
-            String citaAsignada="1";//funciona como un switch
-            request.setAttribute("citaAsignada", citaAsignada);
-            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/listarCitas.jsp"); 
             // Cargamos la pagina
             rd.forward(request, response);
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

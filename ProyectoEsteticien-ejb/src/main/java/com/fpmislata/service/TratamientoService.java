@@ -125,6 +125,17 @@ public class TratamientoService implements TratamientoServiceLocal {
         return lista.get(i);
         
     }
+
+    @Override
+    public Tratamiento muestraUnoId(int id) {
+        Tratamiento tratamientoMostrar = null;
+        for(int i=0;i<lista.size();i++){
+            if(lista.get(i).getId()==id){
+               tratamientoMostrar=lista.get(i);
+            }
+        }
+        return tratamientoMostrar;
+    }
     
     
     

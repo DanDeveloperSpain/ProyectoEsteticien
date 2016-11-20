@@ -26,5 +26,7 @@ public interface ClienteServiceLocal {
 
     Cliente mostrarUno(Cliente cliente);
 
+    Cliente muestraUnoId(int id);
+
         
 }

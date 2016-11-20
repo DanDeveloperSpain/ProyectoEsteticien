@@ -27,5 +27,7 @@ public interface TratamientoServiceLocal {
     void deleteTratamiento(Tratamiento tratamiento);
 
     Tratamiento mostrarUno(Tratamiento tratamiento);
+
+    Tratamiento muestraUnoId(int id);
     
 }

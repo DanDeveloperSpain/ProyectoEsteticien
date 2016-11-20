@@ -79,13 +79,16 @@ public class ClienteService implements ClienteServiceLocal {
         }
     }
 
-    
-
-    
-    
-    
-    
-    
+    @Override
+    public Cliente muestraUnoId(int id) {
+        Cliente clienteMostrar = null;
+        for(int i=0;i<listaClientes.size();i++){
+            if(listaClientes.get(i).getId()==id){
+               clienteMostrar=listaClientes.get(i);
+            }
+        }
+        return clienteMostrar;
+    }
     
     
 }

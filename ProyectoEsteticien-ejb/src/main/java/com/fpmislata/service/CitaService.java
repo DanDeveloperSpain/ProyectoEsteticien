@@ -21,7 +21,7 @@ public class CitaService implements CitaServiceLocal {
     
     static{
         lista.add(new Cita(1, 1, 3, "12/10/2016","12:00"));
-        lista.add(new Cita(2, 2, 3, "12/10/2016","13:00"));
+        lista.add(new Cita(2, 2, 4, "11/11/2016","13:00"));
         
     }
 
