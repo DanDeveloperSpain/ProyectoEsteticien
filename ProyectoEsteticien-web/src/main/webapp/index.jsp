@@ -14,25 +14,35 @@
         <title>Indice</title>
     </head>
     <script>
-        <% String ventaRealizada = (String) request.getAttribute("ventaRealizada"); %>
-        <% String citaAsignada = (String) request.getAttribute("citaAsignada"); %>
-        <% if(ventaRealizada!=null){
+        <%
+        String ventaRealizada = (String) request.getAttribute("ventaRealizada");
+        String citaAsignada = (String) request.getAttribute("citaAsignada");
+        %>
+        <%
+        if(ventaRealizada!=null){
             int ventaProducida = Integer.parseInt(ventaRealizada);
             if(ventaProducida==1){
-        }%>
-            window.onload=function(){
-                alert("La venta se ha producido sin problemas");
-            }
-        <% } %>
+        %>
+                window.onload=function(){
+                    alert("La venta se ha producido sin problemas");
+                }
+        <%  }
+        }
+        %>      
         
-        <% if(citaAsignada!=null){
+        <%
+        if(citaAsignada!=null){
             int citaAsignadaOk = Integer.parseInt(citaAsignada);
             if(citaAsignadaOk==1){
+        %>
+                window.onload=function(){
+                    alert("La Cita se ha asignado correctamente");
+                }
+            <%}
         }%>
-            window.onload=function(){
-                alert("La Cita se ha asignado correctamente");
-            }
-        <% } %>
+        
+        
+            
         
         
             
