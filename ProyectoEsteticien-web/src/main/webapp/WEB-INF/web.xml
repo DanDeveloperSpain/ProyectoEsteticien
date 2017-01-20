@@ -1,92 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>ListarTratamientos</servlet-name>
-        <servlet-class>com.fpmislata.servlets.ListarTratamientos</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AltaTratamiento</servlet-name>
-        <servlet-class>com.fpmislata.servlets.AltaTratamiento</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EliminarTratamiento</servlet-name>
-        <servlet-class>com.fpmislata.servlets.EliminarTratamiento</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ModificarTratamiento</servlet-name>
-        <servlet-class>com.fpmislata.servlets.ModificarTratamiento</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AltaCliente</servlet-name>
-        <servlet-class>com.fpmislata.servlets.AltaCliente</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EliminarCliente</servlet-name>
-        <servlet-class>com.fpmislata.servlets.EliminarCliente</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ListarClientes</servlet-name>
-        <servlet-class>com.fpmislata.servlets.ListarClientes</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ModificarCliente</servlet-name>
-        <servlet-class>com.fpmislata.servlets.ModificarCliente</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ConcertarCita</servlet-name>
-        <servlet-class>com.fpmislata.servlets.ConcertarCita</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VentaProductos</servlet-name>
-        <servlet-class>com.fpmislata.servlets.VentaProductos</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ListarCitas</servlet-name>
-        <servlet-class>com.fpmislata.servlets.ListarCitas</servlet-class>
+        <servlet-name>EsteticienController</servlet-name>
+        <servlet-class>com.fpmislata.servlets.EsteticienController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ListarTratamientos</servlet-name>
-        <url-pattern>/ListarTratamientos</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AltaTratamiento</servlet-name>
-        <url-pattern>/AltaTratamiento</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EliminarTratamiento</servlet-name>
-        <url-pattern>/EliminarTratamiento</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ModificarTratamiento</servlet-name>
-        <url-pattern>/ModificarTratamiento</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AltaCliente</servlet-name>
+        <servlet-name>EsteticienController</servlet-name>
+        <url-pattern>/EsteticienController</url-pattern>
         <url-pattern>/AltaCliente</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EliminarCliente</servlet-name>
-        <url-pattern>/EliminarCliente</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ListarClientes</servlet-name>
-        <url-pattern>/ListarClientes</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ModificarCliente</servlet-name>
-        <url-pattern>/ModificarCliente</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ConcertarCita</servlet-name>
+        <url-pattern>/AltaTratamiento</url-pattern>
         <url-pattern>/ConcertarCita</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VentaProductos</servlet-name>
-        <url-pattern>/VentaProductos</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ListarCitas</servlet-name>
+        <url-pattern>/EliminarCliente</url-pattern>
+        <url-pattern>/EliminarTratamiento</url-pattern>
         <url-pattern>/ListarCitas</url-pattern>
+        <url-pattern>/ListarClientes</url-pattern>
+        <url-pattern>/ListarTratamientos</url-pattern>
+        <url-pattern>/ModificarCliente</url-pattern>
+        <url-pattern>/ModificarTratamiento</url-pattern>
+        <url-pattern>/VentaProductos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
