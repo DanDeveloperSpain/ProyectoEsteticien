@@ -56,9 +56,14 @@ public class ListarCitas extends HttpServlet {
             ArrayList<Tratamiento> listaTrat = new ArrayList<Tratamiento>();
             
             for(Cita cita : listaCita){
-                Cliente cliente= clienteService.muestraUnoId(cita.getIdCliente());
-                Tratamiento tratamiento= tratamientoService.muestraUnoId(cita.getIdTratamiento());
+                Cliente cli = new Cliente(cita.getIdCliente(),"","","","","");
+                Cliente cliente= clienteService.mostrarUno(cli);
+                //Cliente cliente= clienteService.muestraUnoId(cita.getIdCliente());
+                Tratamiento tra= new Tratamiento();
+                tra.setId(cita.getIdTratamiento());
+                //Tratamiento tratamiento= tratamientoService.muestraUnoId(cita.getIdTratamiento());
                 listaCli.add(cliente);
+                Tratamiento tratamiento= tratamientoService.mostrarUno(tra);
                 listaTrat.add(tratamiento);
             }
                
