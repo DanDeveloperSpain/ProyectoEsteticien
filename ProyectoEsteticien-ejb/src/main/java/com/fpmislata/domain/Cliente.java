@@ -6,27 +6,56 @@
 package com.fpmislata.domain;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author alumno
  */
-public class Cliente implements Serializable{
-
+@Entity
+@NamedQueries( { @NamedQuery(name = "Cliente.findAll", query = "SELECT cli FROM Cliente cli ORDER BY cli.id") })
+@Table(name = "clientes")
+public class Cliente implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
     private int id;
+    
+    @Column(nullable = false, length = 50)
     private String nombre;
+    
+    @Column(nullable = false, length = 50)
     private String apellidos;
+
+    @Column(nullable = false, length = 50)
     private String dni;
+   
+    @Column(length = 50)
     private String telefono;
+    
+    @Column(length = 50)
     private String email;
 
-    public Cliente(int id, String nombre, String apellidos, String dni, String telefono, String email) {
-        this.id = id;
+    public Cliente(String nombre, String apellidos, String dni, String telefono, String email) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
         this.telefono = telefono;
         this.email = email;
+    }
+    
+    public Cliente() {
+        
     }
 
     /**
@@ -113,4 +142,8 @@ public class Cliente implements Serializable{
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni=" + dni + ", telefono=" + telefono + ", email=" + email + '}';
+    }
 }

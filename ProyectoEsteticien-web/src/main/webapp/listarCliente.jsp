@@ -13,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
-        <title>JSP Page</title>
+        <title>Listado de Clientes</title>
         <script >
             function calA(){
                 document.listado.action ="EliminarCliente";
@@ -24,7 +24,7 @@
         </script>
     </head>
     
-        <%  ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) session.getAttribute("listaClientes"); %>
+        <%  ArrayList<Cliente> listaClientes = (ArrayList) session.getAttribute("listaClientes"); %>
         <a href="agregarCliente.jsp" class="btn btn-success">Nuevo Cliente</a>
         <form action="" method="POST" name="listado">
         <table border="0" cellspacing="0" cellspadding="10" class="table table-condensed table-responsive">

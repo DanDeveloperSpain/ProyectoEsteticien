@@ -13,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen" />
-        <title>JSP Page</title>
+        <title>Listado de Tratamientos</title>
     </head>
     <body>
 
@@ -48,7 +48,7 @@
                 <td><%=precioTrat%></td>
                 <td><%=duracionTrat%></td>
                 <td><%=sala%></td>
-                <td class="text-center"><a href="ModificarTratamiento?accion=editar&id=<%=id%>" class="btn btn-warning">Modificar</td>
+                <td class="text-center"><a href="ModificarTratamiento?opcion=editar&id=<%=id%>" class="btn btn-warning">Modificar</td>
                 <td class="text-center"><a href="EliminarTratamiento?id=<%=id%>" class="btn btn-danger">Eliminar</a></td>
             </tr>
             <% } %>

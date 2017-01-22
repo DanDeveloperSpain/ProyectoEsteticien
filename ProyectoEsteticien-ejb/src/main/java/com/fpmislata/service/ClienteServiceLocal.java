@@ -7,6 +7,7 @@ package com.fpmislata.service;
 
 import com.fpmislata.domain.Cliente;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -22,11 +23,10 @@ public interface ClienteServiceLocal {
 
     void modificar(Cliente cliente);
 
-    ArrayList<Cliente> listar();
+    List listarClientes();
 
     Cliente mostrarUno(Cliente cliente);
 
-    Cliente muestraUnoId(int id);
-
-        
+    //Cliente muestraUnoId(int id);
+    
 }
