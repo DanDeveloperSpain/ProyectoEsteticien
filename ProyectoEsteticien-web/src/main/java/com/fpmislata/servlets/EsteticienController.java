@@ -216,10 +216,14 @@ public class EsteticienController extends HttpServlet {
             }
 
             // Volvemos a cargar la lista de personas
-            ArrayList<Tratamiento> lista = tratamientoService.listaTratamientos();
-            request.setAttribute("tratamientos", lista);
+            List lista = tratamientoService.listaTratamientos();
+            ArrayList<Tratamiento> tratamientos = new ArrayList<>(lista);
+            request.getSession().setAttribute("tratamientos", tratamientos);
 
-            request.getRequestDispatcher("/listarTratamientos.jsp").forward(request, response);
+            //request.getRequestDispatcher("/listarTratamientos.jsp").forward(request, response);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp"); 
+            rd.forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,7 +240,9 @@ public class EsteticienController extends HttpServlet {
                     // Ejecutamos el metodo y obtenemos la lista de clientes y tratamientos
                     List lista = clienteService.listarClientes();
                     ArrayList<Cliente> listaCli = new ArrayList<>(lista);
-                    ArrayList listaTrat = tratamientoService.listaTratamientos();
+                    
+                    List listatra = tratamientoService.listaTratamientos();
+                    ArrayList<Tratamiento> listaTrat = new ArrayList<>(listatra);
                     // Asignamos al request el atributo lista 
                     request.getSession().setAttribute("listaCli", listaCli);
                     request.getSession().setAttribute("listaTrat", listaTrat);
@@ -324,13 +330,12 @@ public class EsteticienController extends HttpServlet {
                 e.printStackTrace();
             }
 
-            // Ejecutamos el metodo y obtenemos la lista
-            ArrayList lista = tratamientoService.listaTratamientos();
-            // Asignamos al request el atributo lista
-            request.getSession().setAttribute("tratamiento", lista);
-            // Pasamos al RequestDispatcher la pagina a cargar
-            RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp");
-            // Cargamos la pagina
+            // Volvemos a cargar la lista de tratamientos
+            List lista = tratamientoService.listaTratamientos();
+            ArrayList<Tratamiento> tratamientos = new ArrayList<>(lista);
+            request.getSession().setAttribute("tratamientos", tratamientos);
+
+            RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp"); 
             rd.forward(request, response);
 
         } catch (Exception e) {
@@ -386,9 +391,10 @@ public class EsteticienController extends HttpServlet {
     private void listarTratamientos(HttpServletRequest request, HttpServletResponse response) {
         try {
             // Ejecutamos el metodo y obtenemos la lista
-            ArrayList lista = tratamientoService.listaTratamientos();
+            List lista = tratamientoService.listaTratamientos();
+            ArrayList<Tratamiento> listatrat = new ArrayList<>(lista);
             // Asignamos al request el atributo lista 
-            request.getSession().setAttribute("tratamientos", lista);
+            request.getSession().setAttribute("tratamientos", listatrat);
             // Pasamos al RequestDispatcher la pagina a cargar
             RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp");
             // Cargamos la pagina
@@ -443,7 +449,7 @@ public class EsteticienController extends HttpServlet {
                     
 
                     try {
-                        clienteService.modificar(cliente);;
+                        clienteService.modificar(cliente);
                     } catch (Exception e) {
                         //Informamos cualquier error
                         e.printStackTrace();
@@ -508,17 +514,20 @@ public class EsteticienController extends HttpServlet {
                 tratamiento.setSala(sala);
 
                 try {
-                    this.tratamientoService.updateTratamiento(tratamiento);
+                    tratamientoService.updateTratamiento(tratamiento);
                 } catch (Exception e) {
                     //Informamos cualquier error
                     e.printStackTrace();
                 }
 
-                // Volvemos a cargar la lista de personas
-                ArrayList<Tratamiento> lista = tratamientoService.listaTratamientos();
-                request.setAttribute("tratamientos", lista);
-
-                request.getRequestDispatcher("/listarTratamientos.jsp").forward(request, response);
+                // Volvemos a cargar la lista de tratamientos
+                List lista = tratamientoService.listaTratamientos();
+                ArrayList<Tratamiento> tratamientos = new ArrayList<>(lista);
+                request.getSession().setAttribute("tratamientos", tratamientos);
+                RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp"); 
+                rd.forward(request, response);
+                
+        
             }
 
         } catch (Exception e) {

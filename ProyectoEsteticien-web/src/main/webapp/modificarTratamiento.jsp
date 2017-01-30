@@ -17,7 +17,7 @@
 
     <h1>Modificar Tratamiento</h1>
 
-    <form action="ModificarTratamiento?accion=modificar&id=${tratamiento.id}" method="post" class="form-horizontal">
+    <form action="ModificarTratamiento?opcion=modificar&id=${tratamiento.id}" method="post" class="form-horizontal">
         <div class="form-group">   
             <label for="nombre" class="control-label col-sm-1">Nombre:</label>
             <div class="col-sm-11">

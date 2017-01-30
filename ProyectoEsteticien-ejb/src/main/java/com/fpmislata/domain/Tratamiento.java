@@ -6,17 +6,42 @@
 package com.fpmislata.domain;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author DanielPerez
  */
+
+@Entity
+@NamedQueries( { @NamedQuery(name = "Tratamiento.findAll", query = "SELECT tra FROM Tratamiento tra ORDER BY tra.id") })
+@Table(name = "tratamientos")
 public class Tratamiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_tratamiento")
     private int id;
+    
+    @Column(nullable = false, length = 50)
     private String nombreTrat;
-    private double precioTrat, duracionTrat;
+    
+    @Column(nullable = false)
+    private double precioTrat; 
+    
+    @Column(nullable = false)
+    private double duracionTrat;
+    
+    @Column(nullable = false)
     private int sala;
 
     public int getId() {

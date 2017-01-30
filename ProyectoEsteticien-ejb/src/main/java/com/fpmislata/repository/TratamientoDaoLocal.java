@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fpmislata.service;
+package com.fpmislata.repository;
 
 import com.fpmislata.domain.Tratamiento;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,20 +14,16 @@ import javax.ejb.Local;
  * @author DanielPerez
  */
 @Local
-public interface TratamientoServiceLocal {
+public interface TratamientoDaoLocal {
+    
+    List listTratamiento();
 
-    List listaTratamientos();
-    
     void addTratamiento(Tratamiento tratamiento);
-    
+
     void updateTratamiento(Tratamiento tratamiento);
 
     Tratamiento findTratamientoById(Tratamiento tratamiento);
 
     void deleteTratamiento(Tratamiento tratamiento);
-
-    Tratamiento mostrarUno(Tratamiento tratamiento);
-
-    //Tratamiento muestraUnoId(int id);
     
 }

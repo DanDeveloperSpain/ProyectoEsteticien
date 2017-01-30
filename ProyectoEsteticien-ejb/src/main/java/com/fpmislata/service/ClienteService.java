@@ -45,7 +45,7 @@ public class ClienteService implements ClienteServiceLocal {
 
     @Override
     public void modificar(Cliente cliente) {
-        clienteDao.addCliente(cliente);
+        clienteDao.updateCliente(cliente);
     }
 
     /*@Override
