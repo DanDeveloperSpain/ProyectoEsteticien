@@ -55,13 +55,13 @@ public class TratamientoService implements TratamientoServiceLocal {
         tratamientoDao.deleteTratamiento(tratamiento);
     }
 
-    @Override
+    /*@Override
     public Tratamiento mostrarUno(Tratamiento tratamiento) {
         return tratamientoDao.findTratamientoById(tratamiento);
         
     }
 
-    /*@Override
+    @Override
     public Tratamiento muestraUnoId(int id) {
         Tratamiento tratamientoMostrar = null;
         for(int i=0;i<lista.size();i++){

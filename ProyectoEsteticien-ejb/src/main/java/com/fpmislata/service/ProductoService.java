@@ -5,9 +5,10 @@
  */
 package com.fpmislata.service;
 
-import com.fpmislata.domain.Cliente;
 import com.fpmislata.domain.Producto;
-import java.util.ArrayList;
+import com.fpmislata.repository.ProductoDaoLocal;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -17,39 +18,38 @@ import javax.ejb.Stateless;
 @Stateless
 public class ProductoService implements ProductoServiceLocal {
     
-    private static ArrayList<Producto> listaProductos = new ArrayList<>();
-    private static int lastId = 6;
-    
-    static{
-        listaProductos.add(new Producto(1,"Aceite esencia de té","aceites de masaje",4.95));
-        listaProductos.add(new Producto(2,"Crema reafirmante Skin Clinic","cremas",19.90));
-        listaProductos.add(new Producto(3,"Sérum reparador Shu Uemura 30ml","cremas",30.45));
-        listaProductos.add(new Producto(4,"Champú revitalizante L'Oreal","champus",13.45));
-        listaProductos.add(new Producto(5,"After Save Eucerin 75ml","afeitado",12.63));
-        listaProductos.add(new Producto(6,"Avene men espuma de afeitado 200 ml","afeitado",9.74));
-        
-    }
-    
-     @Override
-    public ArrayList<Producto> listarProductos() {
-        return listaProductos;
-    }
-    
-    
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+   @EJB
+    private ProductoDaoLocal productoDao;
 
     @Override
-    public Producto mostrarUno(Producto prod) {
-        Producto prodMostrar = null;
-        for(int i=0;i<listaProductos.size();i++){
-            if(listaProductos.get(i).getId()==prod.getId()){
-               prodMostrar=listaProductos.get(i);
+    public List listaProductos() {
+        return productoDao.listProducto();
+    }
+    
+    
+
+    @Override
+    public void addProducto(Producto producto) {
+        // Comprobamos que no existe por Id
+            Producto p = productoDao.findProductoById(producto);
+            if(p==null){
+                productoDao.addProducto(producto);
             }
-        }
-        return prodMostrar;
     }
 
+    @Override
+    public void updateProducto(Producto producto) {
+        productoDao.updateProducto(producto); 
+    }
+
+    @Override
+    public Producto findProductoById(Producto producto) {
+        return productoDao.findProductoById(producto);
+    }
+
+    @Override
+    public void deleteProducto(Producto producto) {
+        productoDao.deleteProducto(producto);
+    }
    
 }

@@ -17,9 +17,9 @@
         <title>JSP Page</title>
     </head>
 
-    <%  ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) session.getAttribute("listaCli"); %>
-    <%  ArrayList<Tratamiento> listaTratamientos = (ArrayList<Tratamiento>) session.getAttribute("listaTrat"); %>
-    <form action="ConcertarCita?accion=segundo" method="POST" name="listado">
+    <%  ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) session.getAttribute("clientes"); %>
+    <%  ArrayList<Tratamiento> listaTratamientos = (ArrayList<Tratamiento>) session.getAttribute("tratamientos"); %>
+    <form action="ConcertarCita" method="POST" name="listado">
 
         <h2>Clientes</h2>
         <table class="table table-condensed table-responsive" border="0" cellspacing="0" cellspadding="10">

@@ -6,13 +6,21 @@
 package com.fpmislata.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -20,31 +28,36 @@ import javax.persistence.Table;
  * @author alumno
  */
 @Entity
-@NamedQueries( { @NamedQuery(name = "Cliente.findAll", query = "SELECT cli FROM Cliente cli ORDER BY cli.id") })
+@NamedQueries({
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT cli FROM Cliente cli ORDER BY cli.id")})
 @Table(name = "clientes")
 public class Cliente implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente")
     private int id;
-    
+
     @Column(nullable = false, length = 50)
     private String nombre;
-    
+
     @Column(nullable = false, length = 50)
     private String apellidos;
 
     @Column(nullable = false, length = 50)
     private String dni;
-   
+
     @Column(length = 50)
     private String telefono;
-    
+
     @Column(length = 50)
     private String email;
+
+    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.ALL},
+        fetch = FetchType.EAGER)
+    private Set<Cita> citas;
 
     public Cliente(String nombre, String apellidos, String dni, String telefono, String email) {
         this.nombre = nombre;
@@ -52,10 +65,11 @@ public class Cliente implements Serializable {
         this.dni = dni;
         this.telefono = telefono;
         this.email = email;
+        this.citas = new HashSet<>();
     }
-    
+
     public Cliente() {
-        
+
     }
 
     /**
@@ -141,6 +155,15 @@ public class Cliente implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Set<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(Set<Cita> citas) {
+        this.citas = citas;
+    }
+    
 
     @Override
     public String toString() {

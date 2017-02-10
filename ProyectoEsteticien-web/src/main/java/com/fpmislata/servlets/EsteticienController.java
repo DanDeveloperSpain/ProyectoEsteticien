@@ -16,7 +16,6 @@ import com.fpmislata.service.ProductoServiceLocal;
 import com.fpmislata.service.TratamientoServiceLocal;
 import com.fpmislata.service.VentaServiceLocal;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -43,6 +42,7 @@ import javax.servlet.http.HttpServletResponse;
             "/ListarTratamientos",
             "/ModificarCliente",
             "/ModificarTratamiento",
+            "/ListarProductos",
             "/VentaProductos"})
 
 public class EsteticienController extends HttpServlet {
@@ -114,6 +114,10 @@ public class EsteticienController extends HttpServlet {
             // Si la operacion es modificar tratamiento
         } else if (userPath.equals("/ModificarTratamiento")) {
             modificarTratamiento(request, response);
+            
+            // Si la operacion es modificar tratamiento
+        } else if (userPath.equals("/ListarProductos")) {
+            listarProductos(request, response);
 
             // Si la operacion es venta productos
         } else if (userPath.equals("/VentaProductos")) {
@@ -221,8 +225,7 @@ public class EsteticienController extends HttpServlet {
             request.getSession().setAttribute("tratamientos", tratamientos);
 
             //request.getRequestDispatcher("/listarTratamientos.jsp").forward(request, response);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp"); 
+            RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp");
             rd.forward(request, response);
 
         } catch (Exception e) {
@@ -231,7 +234,53 @@ public class EsteticienController extends HttpServlet {
     }
 
     private void concertarCita(HttpServletRequest request, HttpServletResponse response) {
+        //1. Recuperamos los parametros de la cita
+        String fecha = request.getParameter("dia");
+        String hora = request.getParameter("hora");
+        int id_cliente = Integer.parseInt(request.getParameter("clienteChecked"));
+        int id_trat = Integer.parseInt(request.getParameter("tratamientoChecked"));
+
+        //2. Creamos el objeto Cita
+        Cita cita = new Cita(fecha, hora);
+
+        //3. Recuperamos el objeto Cliente y asignamos la cita
+        Cliente cliente = new Cliente();
+        cliente.setId(id_cliente);
+        cliente = clienteService.mostrarUno(cliente);
+        
+        //Recuperamos el objeto tratamiento.
+        Tratamiento tratamiento = new Tratamiento();
+        tratamiento.setId(id_trat);
+        tratamiento = tratamientoService.findTratamientoById(tratamiento);
+        
+
+        //4. Asignamos los valores
+        cita.setCliente(cliente);
+        cliente.getCitas().add(cita);
+        
+        cita.setTratamiento(tratamiento);
+        tratamiento.getCitas().add(cita);
+
         try {
+            citaService.addCita(cita);
+            clienteService.modificar(cliente);
+            tratamientoService.updateTratamiento(tratamiento);
+            
+            // Pasamos al RequestDispatcher la pagina a cargar
+                String citaAsignada = "1";//funciona como un switch
+                request.setAttribute("citaAsignada", citaAsignada);
+                RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                // Cargamos la pagina
+                rd.forward(request, response);
+                
+        } catch (Exception e) { 
+            //Informamos cualquier error 
+            e.printStackTrace();
+        }
+        //listarCitas(request, response);
+        
+
+        /*try {
             String accion = request.getParameter("accion");
 
             if (accion.equals("primero")) {
@@ -240,7 +289,7 @@ public class EsteticienController extends HttpServlet {
                     // Ejecutamos el metodo y obtenemos la lista de clientes y tratamientos
                     List lista = clienteService.listarClientes();
                     ArrayList<Cliente> listaCli = new ArrayList<>(lista);
-                    
+
                     List listatra = tratamientoService.listaTratamientos();
                     ArrayList<Tratamiento> listaTrat = new ArrayList<>(listatra);
                     // Asignamos al request el atributo lista 
@@ -288,7 +337,7 @@ public class EsteticienController extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void eliminarCliente(HttpServletRequest request, HttpServletResponse response) {
@@ -335,7 +384,7 @@ public class EsteticienController extends HttpServlet {
             ArrayList<Tratamiento> tratamientos = new ArrayList<>(lista);
             request.getSession().setAttribute("tratamientos", tratamientos);
 
-            RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp"); 
+            RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp");
             rd.forward(request, response);
 
         } catch (Exception e) {
@@ -345,6 +394,30 @@ public class EsteticienController extends HttpServlet {
 
     private void listarCitas(HttpServletRequest request, HttpServletResponse response) {
         try {
+            // Ejecutamos el metodo y obtenemos la lista 
+            List listacitas = citaService.listCitas();
+
+            // Asignamos al request el atributo lista
+            ArrayList<Cita> listaArrayCita = new ArrayList<>(listacitas);
+            request.getSession().setAttribute("citas", listaArrayCita);
+
+            // Como podemos agregar citas necesitamos cargar los clientes y los tratamientos
+            List listaClientes = clienteService.listarClientes();
+            ArrayList<Cliente> listaArrayClientes = new ArrayList<>(listaClientes);
+            request.getSession().setAttribute("clientes", listaArrayClientes);
+            
+            List listaTratamientos = tratamientoService.listaTratamientos();
+            ArrayList<Tratamiento> listaArrayTratamientos = new ArrayList<>(listaTratamientos);
+            request.getSession().setAttribute("tratamientos", listaArrayTratamientos);
+
+            // Pasamos al RequestDispatcher la pagina a cargar
+            RequestDispatcher rd = request.getRequestDispatcher("/listarCitas.jsp"); // Cargamos la pagina
+            rd.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*try {
             // Ejecutamos el metodo y obtenemos la lista
             ArrayList<Cita> listaCita = citaService.listaCitas();
             ArrayList<Cliente> listaCli = new ArrayList<Cliente>();
@@ -373,7 +446,7 @@ public class EsteticienController extends HttpServlet {
             rd.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void listarClientes(HttpServletRequest request, HttpServletResponse response) {
@@ -385,7 +458,7 @@ public class EsteticienController extends HttpServlet {
             rd.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-        }   
+        }
     }
 
     private void listarTratamientos(HttpServletRequest request, HttpServletResponse response) {
@@ -446,7 +519,6 @@ public class EsteticienController extends HttpServlet {
                     cliente.setDni(dnis[i]);
                     cliente.setTelefono(telefonos[i]);
                     cliente.setEmail(emails[i]);
-                    
 
                     try {
                         clienteService.modificar(cliente);
@@ -524,10 +596,9 @@ public class EsteticienController extends HttpServlet {
                 List lista = tratamientoService.listaTratamientos();
                 ArrayList<Tratamiento> tratamientos = new ArrayList<>(lista);
                 request.getSession().setAttribute("tratamientos", tratamientos);
-                RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp"); 
+                RequestDispatcher rd = request.getRequestDispatcher("/listarTratamientos.jsp");
                 rd.forward(request, response);
-                
-        
+
             }
 
         } catch (Exception e) {
@@ -536,6 +607,8 @@ public class EsteticienController extends HttpServlet {
     }
 
     private void ventaProductos(HttpServletRequest request, HttpServletResponse response) {
+        
+        /*
         try {
             int idCliente;
             String accion = request.getParameter("accion");//debe venir del envio desde el index.jsp
@@ -611,6 +684,23 @@ public class EsteticienController extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }*/
+    }
+
+    private void listarProductos(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // Ejecutamos el metodo y obtenemos la lista
+            List lista = productoService.listaProductos();
+            ArrayList<Producto> listaprod = new ArrayList<>(lista);
+            // Asignamos al request el atributo lista 
+            request.getSession().setAttribute("productos", listaprod);
+            // Pasamos al RequestDispatcher la pagina a cargar
+            RequestDispatcher rd = request.getRequestDispatcher("/listarProductos.jsp");
+            // Cargamos la pagina
+            rd.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        
     }
 }

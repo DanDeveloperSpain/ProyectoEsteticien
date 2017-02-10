@@ -20,6 +20,8 @@
     <body>
 
 	<h1>Listado de Citas</h1>
+        
+        <a href="seleccionCita.jsp" class="btn btn-success">Asignar Citas</a>
 
 	<table class="table table-condensed table-responsive">
             <thead>
@@ -32,16 +34,18 @@
             </thead>
             <%
             ArrayList<Cita> listaCita = (ArrayList) session.getAttribute("citas");
-            ArrayList<Cliente> listaCli = (ArrayList) session.getAttribute("clientes");
-            ArrayList<Tratamiento> listaTrat = (ArrayList) session.getAttribute("tratamientos");
+            //ArrayList<Cliente> listaCli = (ArrayList) session.getAttribute("clientes");
+            //ArrayList<Tratamiento> listaTrat = (ArrayList) session.getAttribute("tratamientos");
             int i=0;
             for(Cita cita : listaCita){
 
                 int id = cita.getId();
                 String dia = cita.getFecha();
                 String hora = cita.getHora();
-                String nombreCli = listaCli.get(i).getNombre();
-                String nombreTrat = listaTrat.get(i).getNombreTrat();
+                String nombreCli = cita.getCliente().getNombre();
+                String nombreTrat = cita.getTratamiento().getNombreTrat();
+                //String nombreCli = listaCli.get(i).getNombre();
+                //String nombreTrat = listaTrat.get(i).getNombreTrat();
                 
                 i++;
             %>                

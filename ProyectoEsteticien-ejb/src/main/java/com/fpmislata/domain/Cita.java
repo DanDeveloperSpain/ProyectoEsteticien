@@ -6,22 +6,55 @@
 package com.fpmislata.domain;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author DanielPerez
  */
-
+@Entity
+@NamedQueries({
+    @NamedQuery(name = "Cita.findAll", query = "SELECT c FROM Cita c " + "ORDER BY c.id")})
+@Table(name = "citas")
 public class Cita implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cita")
     private int id;
-    private int idCliente, idTratamiento;
-    private String fecha, hora;
+
+    @Column(nullable = false, length = 10)
+    private String fecha;
+
+    @Column(nullable = false, length = 10)
+    private String hora;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "tratamiento")
+    private Tratamiento tratamiento;
+
+    public Cita() {
+    }
+
+    public Cita(String fecha, String hora) {
+        this.fecha = fecha;
+        this.hora = hora;
+    }
 
     public int getId() {
         return id;
@@ -30,23 +63,7 @@ public class Cita implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
-    public int getIdCliente() {
-        return idCliente;
-    }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-    
-    public int getIdTratamiento() {
-        return idTratamiento;
-    }
-
-    public void setIdTratamiento(int idTratamiento) {
-        this.idTratamiento = idTratamiento;
-    }
-    
     public String getFecha() {
         return fecha;
     }
@@ -54,7 +71,7 @@ public class Cita implements Serializable {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
-    
+
     public String getHora() {
         return hora;
     }
@@ -63,19 +80,22 @@ public class Cita implements Serializable {
         this.hora = hora;
     }
 
-    public Cita() {
-        
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public Cita(int id, int idCliente, int idTratamiento, String fecha, String hora) {
-        this.id = id;
-        this.idCliente = idCliente;
-        this.idTratamiento = idTratamiento;
-        this.fecha = fecha;
-        this.hora = hora;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
     
+    public Tratamiento getTratamiento() {
+        return tratamiento;
+    }
 
+    public void setTratamiento(Tratamiento tratamiento) {
+        this.tratamiento = tratamiento;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -102,8 +122,9 @@ public class Cita implements Serializable {
 
     @Override
     public String toString() {
-        return "Cita{" + "id=" + id + ", idCliente=" + idCliente + ", idTratamiento=" + idTratamiento + ", fecha=" + fecha + ", hora=" + hora + '}';
+        return "Cita{" + "id=" + id + ", fecha=" + fecha + ", hora=" + hora + ", cliente=" + cliente + ", tratamiento=" + tratamiento + '}';
     }
 
-    
+   
+
 }

@@ -5,18 +5,48 @@
  */
 package com.fpmislata.domain;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 /**
  *
  * @author alumno
  */
-public class Producto {
-    int id;
-    String nombreProducto;
-    String categoriaProducto;
-    double precioProducto;
 
-    public Producto(int id, String nombreProducto, String categoriaProducto, double precioProducto) {
-        this.id = id;
+@Entity
+@NamedQueries( { @NamedQuery(name = "Producto.findAll", query = "SELECT prod FROM Producto prod ORDER BY prod.id") })
+@Table(name = "productos")
+public class Producto implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_producto")
+    private int id;
+    
+    @Column(nullable = false, length = 50)
+    private String nombreProducto;
+    
+    @Column(nullable = false, length = 50)
+    private String categoriaProducto;
+    
+    @Column(nullable = false)
+    private double precioProducto;
+    
+    
+    
+    public Producto() {
+    }
+
+    public Producto(String nombreProducto, String categoriaProducto, double precioProducto) {
         this.nombreProducto = nombreProducto;
         this.categoriaProducto = categoriaProducto;
         this.precioProducto = precioProducto;

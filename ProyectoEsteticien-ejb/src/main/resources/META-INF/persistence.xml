@@ -4,8 +4,26 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
 http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-    <persistence-unit name="EsteticienPU" transaction-type="JTA">
-        <jta-data-source>jdbc/EsteticienDb</jta-data-source>
+    <persistence-unit name="ClientePU" transaction-type="JTA">
+        <jta-data-source>jdbc/EsteticienDataBase</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="TratamientoPU" transaction-type="JTA">
+        <jta-data-source>jdbc/EsteticienDataBase</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="CitaPU" transaction-type="JTA">
+        <jta-data-source>jdbc/EsteticienDataBase</jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="ProductoPU" transaction-type="JTA">
+        <jta-data-source>jdbc/EsteticienDataBase</jta-data-source>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
         </properties>

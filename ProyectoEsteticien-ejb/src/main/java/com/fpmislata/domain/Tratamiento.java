@@ -6,13 +6,18 @@
 package com.fpmislata.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -43,6 +48,10 @@ public class Tratamiento implements Serializable {
     
     @Column(nullable = false)
     private int sala;
+    
+    @OneToMany(mappedBy = "tratamiento", cascade = {CascadeType.ALL},
+        fetch = FetchType.EAGER)
+    private Set<Cita> citas;
 
     public int getId() {
         return id;
@@ -83,17 +92,27 @@ public class Tratamiento implements Serializable {
     public void setSala(int sala) {
         this.sala = sala;
     }
+
+    public Set<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(Set<Cita> citas) {
+        this.citas = citas;
+    }
+    
+    
     
     public Tratamiento(){
         
     }
     
-    public Tratamiento(int id, String nombreTrat, double precioTrat, double duracionTrat, int sala){
-        this.id = id;
+    public Tratamiento(String nombreTrat, double precioTrat, double duracionTrat, int sala){
         this.nombreTrat = nombreTrat;
         this.precioTrat=precioTrat;
         this.duracionTrat=duracionTrat;
         this.sala=sala;
+        this.citas = new HashSet<>();
     }
 
     @Override

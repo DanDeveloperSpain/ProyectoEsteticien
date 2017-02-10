@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fpmislata.service;
+package com.fpmislata.repository;
 
 import com.fpmislata.domain.Cita;
 import java.util.List;
@@ -14,17 +14,16 @@ import javax.ejb.Local;
  * @author DanielPerez
  */
 @Local
-public interface CitaServiceLocal {
-
+public interface CitaDaoLocal {
+    
     List listCitas();
 
     void addCita(Cita cita);
-    
-    Cita findCitaById(Cita cita);
-    
-    void updateCita(Cita cita);
-    
-    void deleteCita(Cita cita);
 
+    void updateCita(Cita cita);
+
+    Cita findCitaById(Cita cita);
+
+    void deleteCita(Cita cita);
     
 }

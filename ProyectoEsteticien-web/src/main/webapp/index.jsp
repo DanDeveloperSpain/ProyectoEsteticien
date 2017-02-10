@@ -43,8 +43,8 @@
         <h2>Sistema de Gestión Esteticien (SGE)</h2>
         <a href="ListarClientes" class="btn btn-primary">Listado de Clientes</a>
         <a href="ListarTratamientos" class="btn btn-primary">Listado de Tratamientos</a>
-        <a href="ConcertarCita?accion=primero" class="btn btn-primary">Asignar Citas</a>
-        <a href="ListarCitas" class="btn btn-primary">Ver Citas</a>
+        <a href="ListarCitas" class="btn btn-primary">Citas</a>
+        <a href="ListarProductos" class="btn btn-primary">Ver Productos</a>
         <a href="VentaProductos?accion=comienzo" class="btn btn-primary">Venta de Productos</a> 
     </body>
 </html>
