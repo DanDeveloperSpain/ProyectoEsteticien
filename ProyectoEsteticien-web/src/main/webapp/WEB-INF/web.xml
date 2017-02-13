@@ -18,6 +18,7 @@
         <url-pattern>/ModificarCliente</url-pattern>
         <url-pattern>/ModificarTratamiento</url-pattern>
         <url-pattern>/ListarProductos</url-pattern>
+        <url-pattern>/ListarVentas</url-pattern>
         <url-pattern>/VentaProductos</url-pattern>
     </servlet-mapping>
     <session-config>

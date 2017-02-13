@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletResponse;
             "/ModificarCliente",
             "/ModificarTratamiento",
             "/ListarProductos",
+            "/ListarVentas",
             "/VentaProductos"})
 
 public class EsteticienController extends HttpServlet {
@@ -114,10 +115,14 @@ public class EsteticienController extends HttpServlet {
             // Si la operacion es modificar tratamiento
         } else if (userPath.equals("/ModificarTratamiento")) {
             modificarTratamiento(request, response);
-            
-            // Si la operacion es modificar tratamiento
+
+            // Si la operacion es listar productos
         } else if (userPath.equals("/ListarProductos")) {
             listarProductos(request, response);
+
+            // Si la operacion es listar productos
+        } else if (userPath.equals("/ListarVentas")) {
+            listarVentas(request, response);
 
             // Si la operacion es venta productos
         } else if (userPath.equals("/VentaProductos")) {
@@ -247,17 +252,16 @@ public class EsteticienController extends HttpServlet {
         Cliente cliente = new Cliente();
         cliente.setId(id_cliente);
         cliente = clienteService.mostrarUno(cliente);
-        
+
         //Recuperamos el objeto tratamiento.
         Tratamiento tratamiento = new Tratamiento();
         tratamiento.setId(id_trat);
         tratamiento = tratamientoService.findTratamientoById(tratamiento);
-        
 
         //4. Asignamos los valores
         cita.setCliente(cliente);
         cliente.getCitas().add(cita);
-        
+
         cita.setTratamiento(tratamiento);
         tratamiento.getCitas().add(cita);
 
@@ -265,20 +269,20 @@ public class EsteticienController extends HttpServlet {
             citaService.addCita(cita);
             clienteService.modificar(cliente);
             tratamientoService.updateTratamiento(tratamiento);
-            
+
             // Pasamos al RequestDispatcher la pagina a cargar
-                String citaAsignada = "1";//funciona como un switch
-                request.setAttribute("citaAsignada", citaAsignada);
-                RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-                // Cargamos la pagina
-                rd.forward(request, response);
-                
-        } catch (Exception e) { 
+            String citaAsignada = "1";//funciona como un switch
+            request.setAttribute("citaAsignada", citaAsignada);
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            // Cargamos la pagina
+            rd.forward(request, response);
+
+        } catch (Exception e) {
             //Informamos cualquier error 
             e.printStackTrace();
         }
         //listarCitas(request, response);
-        
+
 
         /*try {
             String accion = request.getParameter("accion");
@@ -405,7 +409,7 @@ public class EsteticienController extends HttpServlet {
             List listaClientes = clienteService.listarClientes();
             ArrayList<Cliente> listaArrayClientes = new ArrayList<>(listaClientes);
             request.getSession().setAttribute("clientes", listaArrayClientes);
-            
+
             List listaTratamientos = tratamientoService.listaTratamientos();
             ArrayList<Tratamiento> listaArrayTratamientos = new ArrayList<>(listaTratamientos);
             request.getSession().setAttribute("tratamientos", listaArrayTratamientos);
@@ -607,7 +611,81 @@ public class EsteticienController extends HttpServlet {
     }
 
     private void ventaProductos(HttpServletRequest request, HttpServletResponse response) {
-        
+
+        String accion = request.getParameter("accion");
+
+        String fechaVenta;
+        int idCliente;
+        String[] idProductos;
+
+        switch (accion) {
+            case "comienzo":
+                try {
+                    // Ejecutamos el metodo y obtenemos las lista de Productos y Clientes
+                    List listaProd = productoService.listaProductos();
+                    ArrayList<Producto> listaprod = new ArrayList<>(listaProd);
+
+                    List listaCli = clienteService.listarClientes();
+                    ArrayList<Cliente> clientes = new ArrayList<>(listaCli);
+
+                    // Asignamos al request el atributo lista 
+                    request.getSession().setAttribute("listaProductos", listaprod);
+                    request.getSession().setAttribute("listaClientes", clientes);
+
+                    // Pasamos al RequestDispatcher la pagina a cargar
+                    RequestDispatcher rd = request.getRequestDispatcher("/ventaProductos.jsp");
+                    // Cargamos la pagina
+                    rd.forward(request, response);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case "confirmarVenta":
+                fechaVenta = request.getParameter("dia");
+                idCliente = Integer.parseInt(request.getParameter("clienteChecked"));
+                idProductos = (request.getParameterValues("productoChecked"));//este array es de Strings
+
+                try {
+                    // Creamos el objeto Venta
+                    Venta venta = new Venta();
+                    venta.setFecha(fechaVenta);
+
+                    // Recuperamos el objeto cliente
+                    Cliente cliente = new Cliente();
+                    cliente.setId(idCliente);
+                    cliente = clienteService.mostrarUno(cliente);
+
+                    //Creamos un ArrayList de productos
+                    ArrayList<Producto> productosVendidos = new ArrayList<>();
+
+                    for (int i = 0; i < idProductos.length; i++) {
+                        int idProd = Integer.parseInt(idProductos[i]);
+                        Producto prod = new Producto();
+                        prod.setId(idProd);
+                        //Producto producto = productoService.findProductoById(prod);
+                        productosVendidos.add(prod);
+                    }
+
+                    ventaService.addVenta(venta, cliente, productosVendidos);
+
+                    // Pasamos al RequestDispatcher la pagina a cargar
+                    String ventaRealizada = "1";//funciona como un switch
+                    request.setAttribute("ventaRealizada", ventaRealizada);
+                    RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                    // Cargamos la pagina
+                    rd.forward(request, response);
+
+                } catch (Exception e) {
+                    //Informamos cualquier error 
+                    e.printStackTrace();
+                }
+
+                break;
+        }
+
         /*
         try {
             int idCliente;
@@ -701,6 +779,52 @@ public class EsteticienController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
+    }
+
+    private void listarVentas(HttpServletRequest request, HttpServletResponse response) {
+
+        String accion = request.getParameter("accion");
+
+        switch (accion) {
+            case "comienzo":
+                try {
+                    // Ejecutamos el metodo y obtenemos la lista
+                    List lista = ventaService.listaVentas();
+                    ArrayList<Venta> listaVenta = new ArrayList<>(lista);
+                    // Asignamos al request el atributo lista 
+                    request.getSession().setAttribute("ventas", listaVenta);
+                    // Pasamos al RequestDispatcher la pagina a cargar
+                    RequestDispatcher rd = request.getRequestDispatcher("/listarVentas.jsp");
+                    // Cargamos la pagina
+                    rd.forward(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "listarProd":
+                try {
+                    //1. Recuperamos los parametros de la persona 
+                    String id = request.getParameter("id");
+                    Venta v = new Venta();
+                    v.setId(Integer.valueOf(id));
+                    v = ventaService.findVentaById(v);
+
+                    // Asignamos al request el atributo lista
+                    ArrayList<Producto> listaArrayProductos = new ArrayList<>(v.getProductos());
+                    request.getSession().setAttribute("productos", listaArrayProductos);
+
+                    // Pasamos al RequestDispatcher la pagina a cargar
+                    RequestDispatcher rd = request.getRequestDispatcher("/listarVentaCompleta.jsp");
+                    // Cargamos la pagina
+                    rd.forward(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+        }
+
     }
 }

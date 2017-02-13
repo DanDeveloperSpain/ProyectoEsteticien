@@ -5,8 +5,12 @@
  */
 package com.fpmislata.service;
 
+import com.fpmislata.domain.Cliente;
+import com.fpmislata.domain.Producto;
+import com.fpmislata.domain.Venta;
 import com.fpmislata.domain.Venta;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,8 +20,14 @@ import javax.ejb.Local;
 @Local
 public interface VentaServiceLocal {
 
-    void agregarVenta(Venta venta);
+    List listaVentas();
+    
+    void addVenta(Venta venta, Cliente cliente, ArrayList<Producto> productosVendidos);
+    
+    void updateVenta(Venta venta);
 
-    ArrayList<Venta> listarVentas();
+    Venta findVentaById(Venta venta);
+
+    void deleteVenta(Venta venta);
     
 }

@@ -5,7 +5,7 @@
  */
 package com.fpmislata.repository;
 
-import com.fpmislata.domain.Cita;
+import com.fpmislata.domain.Venta;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,36 +16,36 @@ import javax.persistence.PersistenceContext;
  * @author DanielPerez
  */
 @Stateless
-public class CitaDao implements CitaDaoLocal {
+public class VentaDao implements VentaDaoLocal {
 
     @PersistenceContext(unitName="EsteticienPU")
     EntityManager em;
     
     
     @Override
-    public List listCitas() {
-        List a = em.createNamedQuery("Cita.findAll").getResultList();
+    public List listVenta() {
+        List a = em.createNamedQuery("Venta.findAll").getResultList();
         return a;
     }
     
     @Override
-    public void addCita(Cita cita) {
-        em.persist(cita);
+    public void addVenta(Venta venta) {
+        em.persist(venta);
     }
 
     @Override
-    public void updateCita(Cita cita) {
-        em.merge(cita);
+    public void updateVenta(Venta venta) {
+        em.merge(venta);
     }
 
     @Override
-    public Cita findCitaById(Cita cita) {
-        return em.find(Cita.class, cita.getId());
+    public Venta findVentaById(Venta venta) {
+        return em.find(Venta.class, venta.getId());
     }   
 
     @Override
-    public void deleteCita(Cita cita) {
-        cita = findCitaById(cita);
-        em.remove(cita);
+    public void deleteVenta(Venta venta) {
+        venta = findVentaById(venta);
+        em.remove(venta);
     }
 }

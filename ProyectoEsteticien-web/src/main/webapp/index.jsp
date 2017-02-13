@@ -16,6 +16,7 @@
     <script>
         <% String ventaRealizada = (String) request.getAttribute("ventaRealizada"); %>
         <% String citaAsignada = (String) request.getAttribute("citaAsignada"); %>
+            
         <% if(ventaRealizada!=null){
             int ventaProducida = Integer.parseInt(ventaRealizada);
             if(ventaProducida==1){
@@ -45,6 +46,8 @@
         <a href="ListarTratamientos" class="btn btn-primary">Listado de Tratamientos</a>
         <a href="ListarCitas" class="btn btn-primary">Citas</a>
         <a href="ListarProductos" class="btn btn-primary">Ver Productos</a>
-        <a href="VentaProductos?accion=comienzo" class="btn btn-primary">Venta de Productos</a> 
+        <a href="VentaProductos?accion=comienzo" class="btn btn-primary">Venta de Productos</a>
+        <a href="ListarVentas?accion=comienzo" class="btn btn-primary">Ver Ventas</a>
+        <!--<a href="VentaProductos?accion=comienzo" class="btn btn-primary">Venta de Productos</a>-->
     </body>
 </html>

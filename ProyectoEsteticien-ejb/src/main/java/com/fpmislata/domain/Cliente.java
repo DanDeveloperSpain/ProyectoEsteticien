@@ -58,6 +58,10 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente", cascade = {CascadeType.ALL},
         fetch = FetchType.EAGER)
     private Set<Cita> citas;
+    
+    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.ALL},
+        fetch = FetchType.EAGER)
+    private Set<Venta> ventas;
 
     public Cliente(String nombre, String apellidos, String dni, String telefono, String email) {
         this.nombre = nombre;
@@ -66,6 +70,7 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
         this.email = email;
         this.citas = new HashSet<>();
+        this.ventas = new HashSet<>();
     }
 
     public Cliente() {
@@ -163,10 +168,18 @@ public class Cliente implements Serializable {
     public void setCitas(Set<Cita> citas) {
         this.citas = citas;
     }
-    
+
+    public Set<Venta> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(Set<Venta> ventas) {
+        this.ventas = ventas;
+    }
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni=" + dni + ", telefono=" + telefono + ", email=" + email + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni=" + dni + ", telefono=" + telefono + ", email=" + email + ", citas=" + citas + ", ventas=" + ventas + '}';
     }
+    
 }

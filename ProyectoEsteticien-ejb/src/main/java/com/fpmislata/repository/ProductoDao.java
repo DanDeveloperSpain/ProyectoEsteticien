@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ProductoDao implements ProductoDaoLocal {
 
-    @PersistenceContext(unitName="ProductoPU")
+    @PersistenceContext(unitName="EsteticienPU")
     EntityManager em;
     
     

@@ -5,8 +5,15 @@
  */
 package com.fpmislata.service;
 
+import com.fpmislata.domain.Cliente;
+import com.fpmislata.domain.Producto;
 import com.fpmislata.domain.Venta;
+import com.fpmislata.repository.ClienteDaoLocal;
+import com.fpmislata.repository.ProductoDaoLocal;
+import com.fpmislata.repository.VentaDaoLocal;
 import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -15,25 +22,84 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class VentaService implements VentaServiceLocal {
-    private static ArrayList<Venta> listaVentas = new ArrayList<>();
-    private static int lastId = 1;
+
+    @EJB
+    private VentaDaoLocal ventaDao;
+
+    @EJB
+    private ProductoDaoLocal productoDao;
+    
+    @EJB
+    private ClienteDaoLocal clienteDao;
 
     @Override
-    public void agregarVenta(Venta venta) {
-        venta.setIdVenta(lastId);
-        listaVentas.add(venta);
-        lastId++;        
+    public List listaVentas() {
+        return ventaDao.listVenta();
     }
-    
+
     @Override
-    public ArrayList<Venta> listarVentas() {
-        return listaVentas;
+    public void addVenta(Venta venta, Cliente cliente, ArrayList<Producto> idProductos) {
+        // Comprobamos que no existe por Id
+        Venta v = ventaDao.findVentaById(venta);
+        if (v == null) {
+
+            Double precioTotalVenta = 0.0;
+
+            // Asignamos los valores de la venta al cliente
+            venta.setCliente(cliente);
+            cliente.getVentas().add(venta);
+
+            for (int i = 0; i < idProductos.size(); i++) {
+         
+                //Recuperamos el objeto producto
+                Producto prod = new Producto();
+                prod = productoDao.findProductoById(idProductos.get(i));
+
+                //Asignamos el producto a la venta y viceversa
+                venta.getProductos().add(prod);
+                prod.getVentas().add(venta);
+
+                //Vamos sumando el precio final
+                precioTotalVenta += prod.getPrecioProducto();
+
+                //Actualizamos el producto con su venta asignadas
+                try {
+                    
+                    productoDao.updateProducto(prod);
+
+                } catch (Exception e) {
+                    //Informamos cualquier error 
+                    e.printStackTrace();
+                }
+            }
+
+            venta.setPrecioTotal(precioTotalVenta);
+
+            try {
+                
+                clienteDao.updateCliente(cliente);
+                ventaDao.addVenta(venta);
+                
+            } catch (Exception e) {
+                //Informamos cualquier error 
+                e.printStackTrace();
+            }
+        }
     }
 
-    
-    
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public void updateVenta(Venta venta) {
+        ventaDao.updateVenta(venta);
+    }
 
-    
+    @Override
+    public Venta findVentaById(Venta venta) {
+        return ventaDao.findVentaById(venta);
+    }
+
+    @Override
+    public void deleteVenta(Venta venta) {
+        ventaDao.deleteVenta(venta);
+    }
+
 }

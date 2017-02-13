@@ -5,48 +5,71 @@
  */
 package com.fpmislata.domain;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  *
  * @author Vicente
  */
-public class Venta {
+@Entity
+@NamedQueries( { @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v ORDER BY v.id") })
+@Table(name = "ventas")
+public class Venta implements Serializable{
     
-    int idVenta;
-    int idCliente;
-    int idProducto;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_venta")
+    private int id;
+    
+    @Column(nullable = false, length = 50)
     String fecha;
+    
+    @Column(nullable = false)
+    private double precioTotal;
+    
+    @ManyToOne
+    @JoinColumn(name = "cliente")
+    private Cliente cliente;
+    
+    @ManyToMany(cascade = {CascadeType.ALL}, mappedBy="ventas") 
+    private Set<Producto> productos;
+    
+    
 
-    public Venta(int idVenta,int idCliente, int idProducto, String fecha) {
-        this.idVenta=idVenta;
-        this.idCliente = idCliente;
-        this.idProducto = idProducto;
+    public Venta(String fecha, double precioTotal) {
         this.fecha = fecha;
+        this.precioTotal = precioTotal;
+        this.productos = new HashSet<>();
     }
 
-    public int getIdVenta() {
-        return idVenta;
-    }
-
-    public void setIdVenta(int idVenta) {
-        this.idVenta = idVenta;
+    public Venta() {
+        this.productos = new HashSet<>();
     }
     
-    public int getIdCliente() {
-        return idCliente;
+    public int getId() {
+        return id;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setId(int id) {
+        this.id = id;
     }
-
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
-    }
-
+    
     public String getFecha() {
         return fecha;
     }
@@ -54,7 +77,52 @@ public class Venta {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
-    
-    
-    
+
+    public double getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Set<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(Set<Producto> productos) {
+        this.productos = productos;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Venta other = (Venta) obj;
+        return true;
+    }
+
+   
 }
