@@ -30,6 +30,7 @@
                 <tr>
                         <th>Nombre</th>
                         <th>Apellidos</th>
+                        <th>Sexo</th>
                         <th>Dni</th>
                         <th>Telefono</th>
                         <th>Email</th>
@@ -39,6 +40,13 @@
                 <tr>
                     <td><input type="text" name="nombre" value=<%=clientesAModificar.get(i).getNombre()%> required /></td>
                     <td><input type="text" name="apellidos" value=<%=clientesAModificar.get(i).getApellidos()%> required /></td>
+                    <td>
+                        <select name="sexo">
+                            <option value=<%=clientesAModificar.get(i).getSexo()%>>Default: <%=clientesAModificar.get(i).getSexo()%></option>
+                            <option value="femenino">femenino</option>
+                            <option value="masculino">masculino</option>
+                        </select>
+                    </td>
                     <td><input type="text" name="dni" value=<%=clientesAModificar.get(i).getDni()%> required /></td>
                     <td><input type="text" name="telefono" value=<%=clientesAModificar.get(i).getTelefono()%> required /></td>
                     <td><input type="text" name="email" value=<%=clientesAModificar.get(i).getEmail()%> required /></td>

@@ -31,6 +31,7 @@
             <thead>
                     <th>Nombre</th>
                     <th>Apellidos</th>
+                    <th>Sexo</th>
                     <th>Dni</th>
                     <th>Telefono</th>
                     <th>Email</th>
@@ -41,6 +42,7 @@
                 <tr>
                     <td><%=cliente.getNombre()%></td>
                     <td><%=cliente.getApellidos()%></td>
+                    <td><%=cliente.getSexo()%></td>
                     <td><%=cliente.getDni()%></td>
                     <td><%=cliente.getTelefono()%></td>
                     <td><%=cliente.getEmail()%></td>

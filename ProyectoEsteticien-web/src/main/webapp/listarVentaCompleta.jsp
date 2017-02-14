@@ -23,7 +23,7 @@
                 <tr>
                     <th>Nombre Producto</th>
                     <th>Categoria</th>
-                    <th>Producto</th>               
+                    <th>Precio</th>               
 		</tr>
             </thead>
             <%

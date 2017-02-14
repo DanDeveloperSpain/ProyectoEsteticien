@@ -26,6 +26,15 @@
                     <td><input type="text" name="apellidos" value="" required /></td>
                 </tr>
                 <tr>
+                    <td>Sexo</td>
+                    <td>
+                        <select name="sexo">
+                            <option value="femenino">femenino</option>
+                            <option value="masculino">masculino</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td>Dni</td>
                     <td><input type="text" name="dni" value="" required /></td>
                 </tr>

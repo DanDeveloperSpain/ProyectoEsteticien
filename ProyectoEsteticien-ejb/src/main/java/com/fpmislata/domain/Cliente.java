@@ -45,6 +45,9 @@ public class Cliente implements Serializable {
 
     @Column(nullable = false, length = 50)
     private String apellidos;
+    
+    @Column(nullable = false, length = 50)
+    private String sexo;
 
     @Column(nullable = false, length = 50)
     private String dni;
@@ -63,9 +66,10 @@ public class Cliente implements Serializable {
         fetch = FetchType.EAGER)
     private Set<Venta> ventas;
 
-    public Cliente(String nombre, String apellidos, String dni, String telefono, String email) {
+    public Cliente(String nombre, String apellidos, String sexo, String dni, String telefono, String email) {
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.sexo = sexo;
         this.dni = dni;
         this.telefono = telefono;
         this.email = email;
@@ -112,6 +116,13 @@ public class Cliente implements Serializable {
         return apellidos;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
     /**
      * @param apellidos the apellidos to set
      */
@@ -179,7 +190,8 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", dni=" + dni + ", telefono=" + telefono + ", email=" + email + ", citas=" + citas + ", ventas=" + ventas + '}';
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", sexo=" + sexo + ", dni=" + dni + ", telefono=" + telefono + ", email=" + email + ", citas=" + citas + ", ventas=" + ventas + '}';
     }
+
     
 }

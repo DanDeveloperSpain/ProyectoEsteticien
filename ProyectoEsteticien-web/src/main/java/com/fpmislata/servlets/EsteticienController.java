@@ -173,6 +173,7 @@ public class EsteticienController extends HttpServlet {
         try {
             String nombre = request.getParameter("nombre");
             String apellidos = request.getParameter("apellidos");
+            String sexo = request.getParameter("sexo");
             String dni = request.getParameter("dni");
             String telefono = request.getParameter("telefono");
             String email = request.getParameter("email");
@@ -180,6 +181,7 @@ public class EsteticienController extends HttpServlet {
             Cliente clienteAnyadir = new Cliente();
             clienteAnyadir.setNombre(nombre);
             clienteAnyadir.setApellidos(apellidos);
+            clienteAnyadir.setSexo(sexo);
             clienteAnyadir.setDni(dni);
             clienteAnyadir.setTelefono(telefono);
             clienteAnyadir.setEmail(email);
@@ -510,6 +512,7 @@ public class EsteticienController extends HttpServlet {
                 String[] idModificar = request.getParameterValues("id");
                 String[] nombres = request.getParameterValues("nombre");
                 String[] apellidos = request.getParameterValues("apellidos");
+                String[] sexo = request.getParameterValues("sexo");
                 String[] dnis = request.getParameterValues("dni");
                 String[] telefonos = request.getParameterValues("telefono");
                 String[] emails = request.getParameterValues("email");
@@ -520,6 +523,7 @@ public class EsteticienController extends HttpServlet {
                     cliente.setId(idCliente);
                     cliente.setNombre(nombres[i]);
                     cliente.setApellidos(apellidos[i]);
+                    cliente.setSexo(sexo[i]);
                     cliente.setDni(dnis[i]);
                     cliente.setTelefono(telefonos[i]);
                     cliente.setEmail(emails[i]);
