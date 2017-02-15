@@ -46,8 +46,12 @@ public class VentaService implements VentaServiceLocal {
             Double precioTotalVenta = 0.0;
 
             // Asignamos los valores de la venta al cliente
-            venta.setCliente(cliente);
-            cliente.getVentas().add(venta);
+            
+            Cliente cli = new Cliente();
+            cli = clienteDao.findClienteById(cliente);
+            
+            venta.setCliente(cli);
+            cli.getVentas().add(venta);
 
             for (int i = 0; i < idProductos.size(); i++) {
          
@@ -77,7 +81,7 @@ public class VentaService implements VentaServiceLocal {
 
             try {
                 
-                clienteDao.updateCliente(cliente);
+                clienteDao.updateCliente(cli);
                 ventaDao.addVenta(venta);
                 
             } catch (Exception e) {

@@ -258,24 +258,24 @@ public class EsteticienController extends HttpServlet {
         //3. Recuperamos el objeto Cliente y asignamos la cita
         Cliente cliente = new Cliente();
         cliente.setId(id_cliente);
-        cliente = clienteService.mostrarUno(cliente);
+        //cliente = clienteService.mostrarUno(cliente);
 
         //Recuperamos el objeto tratamiento.
         Tratamiento tratamiento = new Tratamiento();
         tratamiento.setId(id_trat);
-        tratamiento = tratamientoService.findTratamientoById(tratamiento);
+        //tratamiento = tratamientoService.findTratamientoById(tratamiento);
 
         //4. Asignamos los valores
-        cita.setCliente(cliente);
-        cliente.getCitas().add(cita);
+        //cita.setCliente(cliente);
+        //cliente.getCitas().add(cita);
 
-        cita.setTratamiento(tratamiento);
-        tratamiento.getCitas().add(cita);
+        //cita.setTratamiento(tratamiento);
+        //tratamiento.getCitas().add(cita);
 
         try {
-            citaService.addCita(cita);
-            clienteService.modificar(cliente);
-            tratamientoService.updateTratamiento(tratamiento);
+            citaService.addCita(cita, cliente, tratamiento);
+            //clienteService.modificar(cliente);
+            //tratamientoService.updateTratamiento(tratamiento);
 
             // Pasamos al RequestDispatcher la pagina a cargar
             String citaAsignada = "1";//funciona como un switch
@@ -665,7 +665,7 @@ public class EsteticienController extends HttpServlet {
                     // Recuperamos el objeto cliente
                     Cliente cliente = new Cliente();
                     cliente.setId(idCliente);
-                    cliente = clienteService.mostrarUno(cliente);
+                    //cliente = clienteService.mostrarUno(cliente);
 
                     //Creamos un ArrayList de productos
                     ArrayList<Producto> productosVendidos = new ArrayList<>();

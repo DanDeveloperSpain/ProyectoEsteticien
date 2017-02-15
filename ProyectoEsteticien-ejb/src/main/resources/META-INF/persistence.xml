@@ -5,15 +5,10 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
 http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="EsteticienPU" transaction-type="JTA">
-        <jta-data-source>jdbc/EsteticienDb</jta-data-source>
+        <jta-data-source>jdbc/EsteticienDataBase</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
-            <property name= "hibernate.show_sql" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" /> 
-            <property name="javax.persistence.jdbc.user" value="esteticien" />
-            <property name="javax.persistence.jdbc.password" value="12345678" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/proyecto-esteticien" />
         </properties>
     </persistence-unit>
 </persistence>
