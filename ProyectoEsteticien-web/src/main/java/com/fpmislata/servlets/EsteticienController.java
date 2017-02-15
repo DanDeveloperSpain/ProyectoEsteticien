@@ -44,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
             "/ModificarTratamiento",
             "/ListarProductos",
             "/ListarVentas",
+            "/ListarClientesPorSexo",
             "/VentaProductos"})
 
 public class EsteticienController extends HttpServlet {
@@ -120,9 +121,13 @@ public class EsteticienController extends HttpServlet {
         } else if (userPath.equals("/ListarProductos")) {
             listarProductos(request, response);
 
-            // Si la operacion es listar productos
+            // Si la operacion es listar vetas
         } else if (userPath.equals("/ListarVentas")) {
             listarVentas(request, response);
+
+            // Si la operacion es listar clientes femeninos
+        } else if (userPath.equals("/ListarClientesPorSexo")) {
+            listarClientesPorSexo(request, response);
 
             // Si la operacion es venta productos
         } else if (userPath.equals("/VentaProductos")) {
@@ -830,5 +835,34 @@ public class EsteticienController extends HttpServlet {
 
         }
 
+    }
+
+    private void listarClientesPorSexo(HttpServletRequest request, HttpServletResponse response) {
+
+        String sexo = request.getParameter("sexo");
+
+        if (sexo.equals("todos")) {
+            try {
+                List lista = clienteService.listarClientes();
+                ArrayList<Cliente> clientes = new ArrayList<>(lista);
+                request.getSession().setAttribute("listaClientes", clientes);
+                RequestDispatcher rd = request.getRequestDispatcher("/listarCliente.jsp");
+                rd.forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                List lista = clienteService.listClientesBySexo(sexo);
+                // Asignamos al request el atributo lista
+                ArrayList<Cliente> listaArrayClienteFemenino = new ArrayList<>(lista);
+                request.getSession().setAttribute("listaClientes", listaArrayClienteFemenino);
+                // Pasamos al RequestDispatcher la pagina a cargar
+                RequestDispatcher rd = request.getRequestDispatcher("/listarCliente.jsp"); // Cargamos la pagina
+                rd.forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

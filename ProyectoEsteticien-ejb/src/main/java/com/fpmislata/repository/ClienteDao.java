@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,16 +19,15 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ClienteDao implements ClienteDaoLocal {
 
-    @PersistenceContext(unitName="EsteticienPU")
+    @PersistenceContext(unitName = "EsteticienPU")
     EntityManager em;
-    
-    
+
     @Override
     public List listCliente() {
         List a = em.createNamedQuery("Cliente.findAll").getResultList();
         return a;
     }
-    
+
     @Override
     public void addCliente(Cliente cliente) {
         em.persist(cliente);
@@ -41,11 +41,20 @@ public class ClienteDao implements ClienteDaoLocal {
     @Override
     public Cliente findClienteById(Cliente cliente) {
         return em.find(Cliente.class, cliente.getId());
-    }   
+    }
 
     @Override
     public void deleteCliente(Cliente cliente) {
         cliente = findClienteById(cliente);
         em.remove(cliente);
     }
+    
+    @Override
+    public List listClientesBySexo(String sexoP) {
+        Query query = em.createNamedQuery("Cliente.findBySexo");
+        query.setParameter("sexo",sexoP);
+        List<Cliente> resultados = query.getResultList();
+        return resultados;
+    }
+    
 }

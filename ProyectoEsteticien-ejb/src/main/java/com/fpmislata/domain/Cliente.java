@@ -29,7 +29,9 @@ import javax.persistence.Table;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Cliente.findAll", query = "SELECT cli FROM Cliente cli ORDER BY cli.id")})
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT cli FROM Cliente cli ORDER BY cli.id"),
+    @NamedQuery(name = "Cliente.findBySexo" , query = "SELECT c FROM Cliente c WHERE c.sexo = :sexo")}
+)
 @Table(name = "clientes")
 public class Cliente implements Serializable {
 

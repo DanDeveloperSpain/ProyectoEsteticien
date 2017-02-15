@@ -26,6 +26,8 @@ public interface ClienteServiceLocal {
     List listarClientes();
 
     Cliente mostrarUno(Cliente cliente);
+    
+    List listClientesBySexo(String sexoP);
 
     //Cliente muestraUnoId(int id);
     

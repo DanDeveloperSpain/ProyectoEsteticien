@@ -26,4 +26,6 @@ public interface ClienteDaoLocal {
 
     void deleteCliente(Cliente cliente);
     
+    List listClientesBySexo(String sexoP);
+    
 }

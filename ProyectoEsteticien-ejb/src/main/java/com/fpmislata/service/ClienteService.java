@@ -47,6 +47,12 @@ public class ClienteService implements ClienteServiceLocal {
     public void modificar(Cliente cliente) {
         clienteDao.updateCliente(cliente);
     }
+    
+    
+    @Override
+    public List listClientesBySexo(String sexoP) {
+        return clienteDao.listClientesBySexo(sexoP);
+    }
 
     /*@Override
     public Cliente muestraUnoId(int id) {
