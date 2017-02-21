@@ -22,6 +22,8 @@ public interface VentaServiceLocal {
 
     List listaVentas();
     
+    void addVenta1(Venta venta);
+    
     void addVenta(Venta venta, Cliente cliente, ArrayList<Producto> productosVendidos);
     
     void updateVenta(Venta venta);

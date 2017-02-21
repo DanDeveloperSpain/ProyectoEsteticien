@@ -27,7 +27,7 @@
 		</tr>
             </thead>
             <%
-            ArrayList<Producto> lista = (ArrayList) session.getAttribute("productos");
+            ArrayList<Producto> lista = (ArrayList) session.getAttribute("productosVenta");
             int i=0;
             for(Producto producto : lista){
 

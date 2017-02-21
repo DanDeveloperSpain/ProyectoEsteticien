@@ -35,8 +35,20 @@ public class CitaService implements CitaServiceLocal {
     public List listCitas() {
         return citaDao.listCitas();
     }
-
+    
     @Override
+    public void addCita(Cita cita) {
+        try {
+            citaDao.addCita(cita);
+
+        } catch (Exception e) {
+            //Informamos cualquier error 
+            e.printStackTrace();
+        }
+
+    }
+
+    /*@Override
     public void addCita(Cita cita, Cliente cliente, Tratamiento tratamiento) {
 
         //Recuperamos el cliente
@@ -65,7 +77,7 @@ public class CitaService implements CitaServiceLocal {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     @Override
     public Cita findCitaById(Cita cita) {

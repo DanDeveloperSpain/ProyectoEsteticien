@@ -20,6 +20,7 @@
         <url-pattern>/ListarProductos</url-pattern>
         <url-pattern>/ListarVentas</url-pattern>
         <url-pattern>/ListarClientesPorSexo</url-pattern>
+        <url-pattern>/ListarVentasCliente</url-pattern>
         <url-pattern>/VentaProductos</url-pattern>
     </servlet-mapping>
     <session-config>

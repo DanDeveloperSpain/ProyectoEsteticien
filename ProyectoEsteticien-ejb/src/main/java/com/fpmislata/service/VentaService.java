@@ -36,6 +36,15 @@ public class VentaService implements VentaServiceLocal {
     public List listaVentas() {
         return ventaDao.listVenta();
     }
+    
+    @Override
+    public void addVenta1(Venta venta) {
+        // Comprobamos que no existe por Id
+            Venta p = ventaDao.findVentaById(venta);
+            if(p==null){
+                ventaDao.addVenta(venta);
+            }
+    }
 
     @Override
     public void addVenta(Venta venta, Cliente cliente, ArrayList<Producto> idProductos) {

@@ -80,7 +80,8 @@ public class Cliente implements Serializable {
     }
 
     public Cliente() {
-
+        this.citas = new HashSet<>();
+        this.ventas = new HashSet<>();
     }
 
     /**

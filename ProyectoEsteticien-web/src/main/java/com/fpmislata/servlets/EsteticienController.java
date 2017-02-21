@@ -45,6 +45,7 @@ import javax.servlet.http.HttpServletResponse;
             "/ListarProductos",
             "/ListarVentas",
             "/ListarClientesPorSexo",
+            "/ListarVentasCliente",
             "/VentaProductos"})
 
 public class EsteticienController extends HttpServlet {
@@ -128,6 +129,10 @@ public class EsteticienController extends HttpServlet {
             // Si la operacion es listar clientes femeninos
         } else if (userPath.equals("/ListarClientesPorSexo")) {
             listarClientesPorSexo(request, response);
+
+            // Si la operacion es listar clientes femeninos
+        } else if (userPath.equals("/ListarVentasCliente")) {
+            listarVentasCliente(request, response);
 
             // Si la operacion es venta productos
         } else if (userPath.equals("/VentaProductos")) {
@@ -258,24 +263,24 @@ public class EsteticienController extends HttpServlet {
         //3. Recuperamos el objeto Cliente y asignamos la cita
         Cliente cliente = new Cliente();
         cliente.setId(id_cliente);
-        //cliente = clienteService.mostrarUno(cliente);
+        cliente = clienteService.mostrarUno(cliente);
 
         //Recuperamos el objeto tratamiento.
         Tratamiento tratamiento = new Tratamiento();
         tratamiento.setId(id_trat);
-        //tratamiento = tratamientoService.findTratamientoById(tratamiento);
+        tratamiento = tratamientoService.findTratamientoById(tratamiento);
 
         //4. Asignamos los valores
-        //cita.setCliente(cliente);
-        //cliente.getCitas().add(cita);
+        cita.setCliente(cliente);
+        cliente.getCitas().add(cita);
 
-        //cita.setTratamiento(tratamiento);
-        //tratamiento.getCitas().add(cita);
+        cita.setTratamiento(tratamiento);
+        tratamiento.getCitas().add(cita);
 
         try {
-            citaService.addCita(cita, cliente, tratamiento);
-            //clienteService.modificar(cliente);
-            //tratamientoService.updateTratamiento(tratamiento);
+            citaService.addCita(cita);
+            clienteService.modificar(cliente);
+            tratamientoService.updateTratamiento(tratamiento);
 
             // Pasamos al RequestDispatcher la pagina a cargar
             String citaAsignada = "1";//funciona como un switch
@@ -657,6 +662,7 @@ public class EsteticienController extends HttpServlet {
                 idCliente = Integer.parseInt(request.getParameter("clienteChecked"));
                 idProductos = (request.getParameterValues("productoChecked"));//este array es de Strings
 
+                /*
                 try {
                     // Creamos el objeto Venta
                     Venta venta = new Venta();
@@ -690,88 +696,69 @@ public class EsteticienController extends HttpServlet {
                 } catch (Exception e) {
                     //Informamos cualquier error 
                     e.printStackTrace();
+                }*/
+                //------OTRO METODO ADD VENTA---------
+                try {
+                    // Creamos el objeto Venta
+                    Venta venta = new Venta();
+                    venta.setFecha(fechaVenta);
+                    venta.setPrecioTotal(99.20);
+
+                    // Recuperamos el objeto cliente
+                    Cliente cliente = new Cliente();
+                    cliente.setId(idCliente);
+                    cliente = clienteService.mostrarUno(cliente);
+
+                    //Asignamos los valores
+                    venta.setCliente(cliente);
+                    //cliente.getVentas().add(venta);
+
+                    try {
+                        clienteService.modificar(cliente);
+                        ventaService.addVenta1(venta);
+
+                    } catch (Exception e) {
+                        //Informamos cualquier error 
+                        e.printStackTrace();
+                    }
+
+                    for (int i = 0; i < idProductos.length; i++) {
+
+                        //Recuperamos el objeto producto
+                        Producto prod = new Producto();
+                        prod.setId(Integer.parseInt(idProductos[i]));
+                        prod = productoService.findProductoById(prod);
+
+                        //Asignamos el producto a la venta y viceversa
+                        prod.getVentas().add(venta);
+                        venta.getProductos().add(prod);
+
+                        //Actualizamos el producto con su venta asignadas
+                        try {
+                            //ventaService.updateVenta(venta);
+                            productoService.updateProducto(prod);
+
+                        } catch (Exception e) {
+                            //Informamos cualquier error 
+                            e.printStackTrace();
+                        }
+                    }
+
+                    // Pasamos al RequestDispatcher la pagina a cargar
+                    String ventaRealizada = "1";//funciona como un switch
+                    request.setAttribute("ventaRealizada", ventaRealizada);
+                    RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+                    // Cargamos la pagina
+                    rd.forward(request, response);
+
+                } catch (Exception e) {
+                    //Informamos cualquier error 
+                    e.printStackTrace();
                 }
 
                 break;
         }
 
-        /*
-        try {
-            int idCliente;
-            String accion = request.getParameter("accion");//debe venir del envio desde el index.jsp
-            String[] idProductos;
-            ArrayList<Producto> productosVendidos = new ArrayList<>();
-
-            switch (accion) {
-                case "comienzo":
-                    ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) request.getSession().getAttribute("listaClientes");
-                    if (listaClientes == null) {
-                        List lista = clienteService.listarClientes();
-                        listaClientes = (ArrayList<Cliente>) lista;
-                    }
-                    request.getSession().setAttribute("listaClientes", listaClientes);
-                    RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/seleccionClientesVentas.jsp");
-                    rd.forward(request, response);
-                    ;
-                    break;
-                case "selectCliente":
-                    idCliente = Integer.parseInt(request.getParameter("clienteChecked"));
-                    request.getSession().setAttribute("idCliente", idCliente);
-
-                    ArrayList<Producto> listaProductos = productoService.listarProductos();
-
-                    request.setAttribute("listaProductos", listaProductos);
-                    rd = this.getServletContext().getRequestDispatcher("/seleccionProductosVentas.jsp");
-                    rd.forward(request, response);
-                    ;
-                    break;
-                case "selectProducto":
-                    idCliente = (int) request.getSession().getAttribute("idCliente");
-                    Cliente cl = new Cliente();
-                    cl.setId(idCliente);
-                    Cliente cliente = clienteService.mostrarUno(cl);
-
-                    Double precioTotalVenta = 0.0;
-
-                    idProductos = (request.getParameterValues("productoChecked"));//este array es de Strings
-                    request.getSession().setAttribute("idProductos", idProductos);
-                    if (idProductos != null) {
-                        for (int i = 0; i < idProductos.length; i++) {
-                            int idProd = Integer.parseInt(idProductos[i]);
-                            Producto prod = new Producto(idProd, "", "", 0);
-                            Producto producto = productoService.mostrarUno(prod);
-                            productosVendidos.add(producto);
-                            precioTotalVenta += producto.getPrecioProducto();
-                        }
-                    }
-
-                    request.setAttribute("cliente", cliente);
-                    request.setAttribute("prodsVendidos", productosVendidos);
-                    request.setAttribute("precioTotal", precioTotalVenta);
-                    rd = this.getServletContext().getRequestDispatcher("/finalizarVentaProductos.jsp");
-                    rd.forward(request, response);
-
-                    ;
-                    break;
-                case "confirmarVenta":
-                    idCliente = (int) request.getSession().getAttribute("idCliente");
-                    idProductos = (String[]) request.getSession().getAttribute("idProductos");
-                    String fechaVenta = request.getParameter("fechaVenta");
-                    for (int i = 0; i < idProductos.length; i++) {
-                        int idProd = Integer.parseInt(idProductos[i]);
-                        Venta venta = new Venta(0, idCliente, idProd, fechaVenta);
-                        ventaService.agregarVenta(venta);
-                    }
-                    String ventaRealizada = "1";//funciona como un switch
-                    request.setAttribute("ventaRealizada", ventaRealizada);
-                    rd = this.getServletContext().getRequestDispatcher("/index.jsp");
-                    rd.forward(request, response);
-                    ;
-                    break;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void listarProductos(HttpServletRequest request, HttpServletResponse response) {
@@ -814,7 +801,7 @@ public class EsteticienController extends HttpServlet {
 
             case "listarProd":
                 try {
-                    //1. Recuperamos los parametros de la persona 
+                    //1. Recuperamos los parametros del cliente 
                     String id = request.getParameter("id");
                     Venta v = new Venta();
                     v.setId(Integer.valueOf(id));
@@ -822,10 +809,10 @@ public class EsteticienController extends HttpServlet {
 
                     // Asignamos al request el atributo lista
                     ArrayList<Producto> listaArrayProductos = new ArrayList<>(v.getProductos());
-                    request.getSession().setAttribute("productos", listaArrayProductos);
+                    request.setAttribute("productosVenta", listaArrayProductos);
 
                     // Pasamos al RequestDispatcher la pagina a cargar
-                    RequestDispatcher rd = request.getRequestDispatcher("/listarVentaCompleta.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/listarVentas.jsp");
                     // Cargamos la pagina
                     rd.forward(request, response);
                 } catch (Exception e) {
@@ -855,14 +842,63 @@ public class EsteticienController extends HttpServlet {
             try {
                 List lista = clienteService.listClientesBySexo(sexo);
                 // Asignamos al request el atributo lista
-                ArrayList<Cliente> listaArrayClienteFemenino = new ArrayList<>(lista);
-                request.getSession().setAttribute("listaClientes", listaArrayClienteFemenino);
+                ArrayList<Cliente> listaArrayClienteSexo = new ArrayList<>(lista);
+                request.getSession().setAttribute("listaClientes", listaArrayClienteSexo);
                 // Pasamos al RequestDispatcher la pagina a cargar
                 RequestDispatcher rd = request.getRequestDispatcher("/listarCliente.jsp"); // Cargamos la pagina
                 rd.forward(request, response);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void listarVentasCliente(HttpServletRequest request, HttpServletResponse response) {
+        String accion = request.getParameter("accion");
+
+        switch (accion) {
+            case "comienzo":
+                try {
+                    //1. Recuperamos los parametros de la persona 
+                    String id = request.getParameter("id");
+                    Cliente cli = new Cliente();
+                    cli.setId(Integer.valueOf(id));
+                    cli = clienteService.mostrarUno(cli);
+
+                    // Asignamos al request el atributo lista
+                    ArrayList<Venta> listaArrayVentas = new ArrayList<>(cli.getVentas());
+                    request.setAttribute("ventasCli", listaArrayVentas);
+
+                    // Pasamos al RequestDispatcher la pagina a cargar
+                    RequestDispatcher rd = request.getRequestDispatcher("/listarCliente.jsp");
+                    // Cargamos la pagina
+                    rd.forward(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case "listarCitas":
+                try {
+                    //1. Recuperamos los parametros de la persona 
+                    String id = request.getParameter("id");
+                    Cliente cli = new Cliente();
+                    cli.setId(Integer.valueOf(id));
+                    cli = clienteService.mostrarUno(cli);
+
+                    // Asignamos al request el atributo lista
+                    ArrayList<Cita> listaArrayCitaCli = new ArrayList<>(cli.getCitas());
+                    request.setAttribute("citasCli", listaArrayCitaCli);
+
+                    // Pasamos al RequestDispatcher la pagina a cargar
+                    RequestDispatcher rd = request.getRequestDispatcher("/listarCliente.jsp");
+                    // Cargamos la pagina
+                    rd.forward(request, response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
         }
     }
 }

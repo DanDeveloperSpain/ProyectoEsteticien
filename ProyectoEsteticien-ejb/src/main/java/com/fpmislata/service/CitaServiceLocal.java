@@ -19,8 +19,9 @@ import javax.ejb.Local;
 public interface CitaServiceLocal {
 
     List listCitas();
-
-    void addCita(Cita cita, Cliente cliente, Tratamiento tratamiento);
+    
+    void addCita(Cita cita);
+    //void addCita(Cita cita, Cliente cliente, Tratamiento tratamiento);
     
     Cita findCitaById(Cita cita);
     
